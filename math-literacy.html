@@ -945,22 +945,22 @@
   </header>
   <div class="weeksRow" role="navigation" aria-label="Level C weeks">
     <button type="button" class="weekBtn" data-week="1" aria-label="Open Week 1">
-      <span class="weekArt"><img src="assets/c7/week_1_thumb.png?v=1" alt=""></span>
+      <span class="weekArt"><img src="assets/c7/week_1_thumb.png?v=2" alt=""></span>
       <span class="weekNum">1</span>
       <span class="weekLabel">Week 1</span>
     </button>
     <button type="button" class="weekBtn" data-week="2" aria-label="Open Week 2">
-      <span class="weekArt"><img src="assets/c7/week_2_thumb.png?v=1" alt=""></span>
+      <span class="weekArt"><img src="assets/c7/week_2_thumb.png?v=2" alt=""></span>
       <span class="weekNum">2</span>
       <span class="weekLabel">Week 2</span>
     </button>
     <button type="button" class="weekBtn" data-week="3" aria-label="Open Week 3">
-      <span class="weekArt"><img src="assets/c7/week_3_thumb.png?v=1" alt=""></span>
+      <span class="weekArt"><img src="assets/c7/week_3_thumb.png?v=2" alt=""></span>
       <span class="weekNum">3</span>
       <span class="weekLabel">Week 3</span>
     </button>
     <button type="button" class="weekBtn" data-week="4" aria-label="Open Week 4">
-      <span class="weekArt"><img src="assets/c7/week_4_thumb.png?v=1" alt=""></span>
+      <span class="weekArt"><img src="assets/c7/week_4_thumb.png?v=2" alt=""></span>
       <span class="weekNum">4</span>
       <span class="weekLabel">Week 4</span>
     </button>
@@ -1076,15 +1076,9 @@
     <div class="conceptStage" id="c_stage">
       <button type="button" class="conceptPick" data-act="concept-patterns" aria-label="We Are at the Park">
         <span class="conceptThumbWrap">
-          <img src="assets/videos/thumbs/c7w1_concept_1.png?v=2" alt="">
+          <img src="assets/videos/thumbs/c7w1_concept.png?v=2" alt="">
         </span>
         <span>We Are at the Park</span>
-      </button>
-      <button type="button" class="conceptPick" data-act="concept-bigger" aria-label="It Is an AB, AABB, AAB or ABBB Pattern">
-        <span class="conceptThumbWrap">
-          <img src="assets/videos/thumbs/c7w1_concept_2.png?v=4" alt="">
-        </span>
-        <span>It Is an AB, AABB, AAB or ABBB Pattern</span>
       </button>
       <video id="c_player" controls playsinline preload="metadata" style="background:#fff6f0"></video>
       <button type="button" id="c_startBtn" class="conceptStartBtn" aria-label="Play video" hidden>
@@ -1378,13 +1372,13 @@ const ANIMALS={
   ant:{src:'assets/c7w2/ant.png',name:'ant',pl:'ants'},
   bee:{src:'assets/c7w2/bee.png',name:'bee',pl:'bees'},
   /* Week 4 is in the cave (workbook pp.20-25), cast cut from the repeated-addition pages themselves */
-  spider:{src:'assets/c7w4/spider.png',name:'spider',pl:'spiders'},
-  rat:{src:'assets/c7w4/rat.png',name:'rat',pl:'rats'},
-  cavebat:{src:'assets/c7w4/bat.png',name:'bat',pl:'bats'},   /* W1 already owns `bat` */
-  ghost:{src:'assets/c7w4/ghost.png',name:'ghost',pl:'ghosts'},
-  pumpkin:{src:'assets/c7w4/pumpkin.png',name:'pumpkin',pl:'pumpkins'},
-  caterpillar:{src:'assets/c7w4/caterpillar.png',name:'caterpillar',pl:'caterpillars'},
-  blob:{src:'assets/c7w4/monster.png',name:'monster',pl:'monsters'}
+  spider:{src:'assets/c7w4/spider.png?v=2',name:'spider',pl:'spiders'},
+  rat:{src:'assets/c7w4/rat.png?v=2',name:'rat',pl:'rats'},
+  cavebat:{src:'assets/c7w4/bat.png?v=2',name:'bat',pl:'bats'},   /* W1 already owns `bat` */
+  ghost:{src:'assets/c7w4/ghost.png?v=2',name:'ghost',pl:'ghosts'},
+  pumpkin:{src:'assets/c7w4/pumpkin.png?v=2',name:'pumpkin',pl:'pumpkins'},
+  caterpillar:{src:'assets/c7w4/caterpillar.png?v=2',name:'caterpillar',pl:'caterpillars'},
+  blob:{src:'assets/c7w4/monster.png?v=2',name:'monster',pl:'monsters'}
 };
 const NUM_WORDS=['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve',
                  'thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty',
@@ -1650,7 +1644,7 @@ const ACTS_W4={
        page:{ note:'Use all the pattern rules.', say:'Complete all<br>the patterns!',
               step:'<span class="stepNo">(1)</span> Complete the patterns.',
               label:'repeats' },
-       intro:{voice:'w4_cp_a1_intro', video:'assets/c7w4/talk_cp_a1.webm?v=3', still:'assets/c7w4/talk_cp_a1_idle.png?v=4',
+       intro:{voice:'w4_cp_a1_intro', video:'assets/c7w4/talk_cp_a1.webm?v=5', still:'assets/c7w4/talk_cp_a1_idle.png?v=5',
               text:'Use all the rules<br>to complete each pattern!', est:5000},
        question:'w4_cp_a1_question',  /* after the presenter intro, a separate VO reads the on-screen question */
        rounds:[ {rule:1, strip:'TSC____'},
@@ -1659,8 +1653,9 @@ const ACTS_W4={
                 {rule:4, strip:'RRSTC_____'} ]},
   a2:{ ribbon:'',
        page:{ note:'', say:'Trace the lines<br>to complete the pattern.', step:'', label:'thisis' },
-       intro:{voice:'w4_cp_a2_intro', video:'assets/c7w4/talk_cp_a2.webm', still:'assets/c7w4/talk_cp_a2_idle.png?v=2',
-              text:'Now we <b>trace</b>!<br>Trace every shape to finish the pattern.', est:8000},
+       intro:{voice:'w4_cp_a2_intro', video:'assets/c7w4/talk_cp_a2.webm?v=6', still:'assets/c7w4/talk_cp_a2_idle.png?v=6',
+              text:'Some shapes are drawn<br>with <b>dotted lines</b>!', est:5000},
+       question:'w4_cp_a2_question',
        rounds:[ {rule:1, trace:true},
                 {rule:2, trace:true},
                 {rule:3, trace:true},
@@ -1670,8 +1665,9 @@ const ACTS_W4={
        page:{ note:'See how the pattern starts.', say:'Start all<br>the patterns!',
               step:'<span class="stepNo">(2)</span> Start the patterns.',
               label:'repeats' },
-       intro:{voice:'w4_cp_start_intro', video:'assets/c7w4/talk_cp_start.webm', still:'assets/c7w4/talk_cp_start_idle.png?v=2',
+       intro:{voice:'w4_cp_start_intro', video:'assets/c7w4/talk_cp_start.webm?v=5', still:'assets/c7w4/talk_cp_start_idle.png?v=5',
               text:'Aha! I see how<br>the patterns <b>start</b>.', est:8500},
+       question:'w4_cp_start_question',
        rounds:[ {rule:1, strip:'___TSC'},
                 {rule:2, strip:'____TTTS'},
                 {rule:3, strip:'____CCST'},
@@ -1737,10 +1733,12 @@ K.reg('w3_cp_free_norep','assets/voice/w3/cp_free_norep.mp3','Hmm, it does not r
 K.reg('w3_cp_free_both','assets/voice/w3/cp_free_both.mp3','Use all four shapes!');
 K.reg('w3_cp_free_same','assets/voice/w3/cp_free_same.mp3','That is the same rule. Make a new rule!');
 /* Week 4 - the cave review names its four mixed rules by shape, not by letter (pp.21-23) */
-K.reg('w4_cp_a1_intro','assets/voice/w4/cp_a1_intro.mp3?v=3','Use all the rules to complete each pattern.');
+K.reg('w4_cp_a1_intro','assets/voice/w4/cp_a1_intro.mp3?v=5','Use all the rules to complete each pattern.');
 K.reg('w4_cp_a1_question','assets/voice/w4/cp_a1_question.mp3?v=1','Complete all the patterns!');  /* separate VO reads the on-screen question after the presenter */
-K.reg('w4_cp_a2_intro','assets/voice/w4/cp_a2_intro.mp3','Now we trace! Trace every shape to finish the pattern.');
-K.reg('w4_cp_start_intro','assets/voice/w4/cp_start_intro.mp3','See how the pattern ends. Now start the pattern the same way!');
+K.reg('w4_cp_a2_question','assets/voice/w4/cp_a2_question.mp3?v=1','Trace the lines to complete the pattern.');
+K.reg('w4_cp_start_question','assets/voice/w4/cp_start_question.mp3?v=1','Start all the patterns!');
+K.reg('w4_cp_a2_intro','assets/voice/w4/cp_a2_intro.mp3?v=6','Some shapes are drawn with dotted lines!');
+K.reg('w4_cp_start_intro','assets/voice/w4/cp_start_intro.mp3?v=5','See how the pattern ends. Now start the pattern the same way!');
 K.reg('w4_cp_rule_1','assets/voice/w4/cp_rule_1.mp3','Rule 1: triangle, square, circle. Repeat!');
 K.reg('w4_cp_rule_2','assets/voice/w4/cp_rule_2.mp3','Rule 2: triangle, triangle, triangle, square. Repeat!');
 K.reg('w4_cp_rule_3','assets/voice/w4/cp_rule_3.mp3','Rule 3: circle, circle, square, triangle. Repeat!');
@@ -2101,14 +2099,16 @@ const ACTS_W4={
        page:{ ribbon:'Adding the Same Number Repeatedly', note:'Practice repeated addition.',
               char:'assets/c7w4/ra_teacher.png?v=4', bubble:'',
               say:'Adding again and<br>again is <span class="r">multiplying</span>.' },
-       intro:{voice:'w4_ra_a1_intro', video:'assets/c7w4/talk_ra_a1.webm', still:'assets/c7w4/talk_ra_a1_idle.png?v=2',
+       intro:{voice:'w4_ra_a1_intro', video:'assets/c7w4/talk_ra_a1.webm?v=5', still:'assets/c7w4/talk_ra_a1_idle.png?v=5',
               text:'Add the <b>same</b> number.<br>Then <b>multiply</b>!', est:8000},
+       question:'w4_ra_a1_question',
        rounds:[ {an:'spider',n:1,add:2},{an:'cavebat',n:2,add:2},{an:'pumpkin',n:3,add:3} ] },
   a2:{ heroL:'assets/c7/boy_idle.png', heroR:'assets/c7/girl_idle.png',
        page:{ ribbon:'', note:'', char:'assets/c7w4/ra_boy.png?v=4', bubble:'',
               say:'Keep going!<br>You are so smart.' },
-       intro:{voice:'w4_ra_a2_intro', video:'assets/c7w4/talk_ra_a2.webm', still:'assets/c7w4/talk_ra_a2_idle.png?v=2',
+       intro:{voice:'w4_ra_a2_intro', video:'assets/c7w4/talk_ra_a2.webm?v=5', still:'assets/c7w4/talk_ra_a2_idle.png?v=5',
               text:'Bigger groups!<br>Add, then <b>multiply</b>.', est:7500},
+       question:'w4_ra_a2_question',
        rounds:[ {an:'caterpillar',n:4,add:3},{an:'ghost',n:5,add:4},{an:'blob',n:6,add:4} ] }
 };
 let ACTS=ACTS_W1;
@@ -2136,8 +2136,10 @@ for(const n of [1,2,3,4,5,6]){ K.reg('w3_ra_done_'+n,'assets/voice/w3/ra_done_'+
     NUM_WORDS[n]+' times four equals '+NUM_WORDS[4*n]+'!'); }
 /* Week 4 - the multiplier changes per round (x2, x2, x3 then x3, x4, x4), so each done line is
    built with its own addend count rather than in a single uniform loop. */
-K.reg('w4_ra_a1_intro','assets/voice/w4/ra_a1_intro.mp3','Add the same number. Then multiply! Tap the numbers.');
-K.reg('w4_ra_a2_intro','assets/voice/w4/ra_a2_intro.mp3','Bigger groups now! Add the same number, then multiply.');
+K.reg('w4_ra_a1_intro','assets/voice/w4/ra_a1_intro.mp3?v=5','Add the same number. Then multiply! Tap the numbers.');
+K.reg('w4_ra_a2_intro','assets/voice/w4/ra_a2_intro.mp3?v=5','Bigger groups now! Add the same number, then multiply.');
+K.reg('w4_ra_a1_question','assets/voice/w4/ra_question.mp3?v=1','Practice repeated addition!');   /* separate VO reads the question */
+K.reg('w4_ra_a2_question','assets/voice/w4/ra_question.mp3?v=1','Practice repeated addition!');
 K.reg('w4_ra_same','assets/voice/w4/ra_same.mp3','Add the same number!');
 K.reg('w4_ra_count','assets/voice/w4/ra_count.mp3','Count them!');
 K.reg('w4_ra_mul','assets/voice/w4/ra_mul.mp3','Equal groups of the same number. Now multiply!');
@@ -2256,7 +2258,9 @@ function start(a){ K.stopAll();
   $('app').classList.toggle('pageHead', !!_pg);
   K.setHeroes(ACTS[act].heroL,ACTS[act].heroR);
   K.buildStars(ACTS[act].rounds.length); K.litStars(0); K.preloadHeroes(); renderRound();
-  K.intro(ACTS[act].intro,()=>{ locked=false; }); }
+  K.intro(ACTS[act].intro,()=>{ locked=false;
+    const _q=ACTS[act].question; if(_q) K.say(_q,null,3500);   /* presenter presented; separate VO reads the question */
+  }); }
 window.AddGame={ _lastAct:'a1', start(a){ if(a) this._lastAct=a; start(a||this._lastAct); }, stop(){ K.stopAll(); locked=true; } };
 K.wireNav(window.AddGame);
 App.engines.ra=window.AddGame;
@@ -2393,7 +2397,8 @@ K.reg('w3_t2_toomany','assets/voice/w3/t2_toomany.mp3','Too many! Tap one to tak
 for(const n of [2,3,4,5,6]){ K.reg('w3_t2_done_'+n,'assets/voice/w3/t2_done_'+n+'.mp3',
     NUM_WORDS[n]+' plus '+NUM_WORDS[n]+' plus '+NUM_WORDS[n]+' plus '+NUM_WORDS[n]+' equals '+NUM_WORDS[4*n]+'!'); }
 /* Week 4 - build four equal cave groups, then add them (n x 4) */
-K.reg('w4_t2_intro','assets/voice/w4/t2_intro.mp3','Make four groups with the same number. Then add them all up!');
+K.reg('w4_t2_intro','assets/voice/w4/t2_intro.mp3?v=6','Four equal groups is the same as multiplying!');
+K.reg('w4_t2_question','assets/voice/w4/t2_question.mp3?v=1','Make four equal groups!');   /* separate VO reads the task */
 K.reg('w4_t2_next','assets/voice/w4/t2_next.mp3','Same number! Now make one more group.');
 K.reg('w4_t2_ok','assets/voice/w4/t2_ok.mp3','Four groups, all the same! Now add them. How many altogether?');
 K.reg('w4_t2_more','assets/voice/w4/t2_more.mp3','Not yet. Count again and make the same number.');
@@ -2476,11 +2481,12 @@ function tapNum(btn){
 }
 /* The child only ever taps the TOTAL here, so a 1..24 keypad is four rows of which at most
    three can be right - the same "too many that are not needed" the Repeated Addition pad had,
-   and it ran past the heroes. Week 3 offers each round's group size and its total: the group
-   size is the misconception worth testing ("how many altogether?" answered with one group).
-   Weeks 1 and 2 are approved and keep the pad they shipped with. */
+   and it ran past the heroes. Weeks 3 AND 4 offer only each round's group size and its total:
+   the group size is the misconception worth testing ("how many altogether?" answered with one
+   group). Weeks 1 and 2 are approved and keep the pad they shipped with. */
 function padNumbers(){
-  if(!((window.Hub&&Hub.week)===3)) return Array.from({length:Math.max(12,(MINE+1)*6)},(_,i)=>i+1);
+  const _wk=(window.Hub&&Hub.week);
+  if(_wk!==3 && _wk!==4) return Array.from({length:Math.max(12,(MINE+1)*6)},(_,i)=>i+1);
   const need=new Set();
   for(const r of ROUNDS){ need.add(r.n); need.add((MINE+1)*r.n); }
   return [...need].sort((a,b)=>a-b);
@@ -2500,11 +2506,14 @@ function start(){ K.stopAll();
   K.setHeroes('assets/c7/boy_idle.png','assets/c7/girl_idle.png');
   K.buildStars(ROUNDS.length); K.litStars(0); K.preloadHeroes(); renderRound();
   K.intro({voice:vk('t2_intro'),
-    video:(w4?'assets/c7w4/talk_tm2.webm':w3?'assets/c7w3/talk_tm2.webm?v=3':w2?'assets/c7w2/talk_tm2.webm':'assets/c7/talk_tm2.webm'),
-    still:(w4?'assets/c7w4/talk_tm2_idle.png?v=2':w3?'assets/c7w3/talk_tm2_idle.png?v=3':w2?'assets/c7w2/talk_tm2_idle.png':'assets/c7/boy_idle.png'),
-    text:((w4||w3)?'Make <b>four</b> groups with the<br><b>same</b> number. Then add!'
+    video:(w4?'assets/c7w4/talk_tm2.webm?v=6':w3?'assets/c7w3/talk_tm2.webm?v=3':w2?'assets/c7w2/talk_tm2.webm':'assets/c7/talk_tm2.webm'),
+    still:(w4?'assets/c7w4/talk_tm2_idle.png?v=6':w3?'assets/c7w3/talk_tm2_idle.png?v=3':w2?'assets/c7w2/talk_tm2_idle.png':'assets/c7/boy_idle.png'),
+    text:(w4?'Four equal groups is the<br>same as <b>multiplying</b>!'
+          :w3?'Make <b>four</b> groups with the<br><b>same</b> number. Then add!'
           :w2?'Make the <b>same</b> number<br><b>three</b> times. Then add!'
-             :'Make the <b>same</b> number.<br>Then add them!'), est:9500},()=>{ locked=false; }); }
+             :'Make the <b>same</b> number.<br>Then add them!'), est:(w4?5500:9500)},()=>{ locked=false;
+    if(w4) K.say('w4_t2_question',null,3500);   /* presenter presented the idea; separate VO reads the task */
+  }); }
 window.SameNumGame={ _lastAct:null, start(){ start(); }, stop(){ K.stopAll(); locked=true; } };
 K.wireNav(window.SameNumGame);
 App.engines.tm2=window.SameNumGame;
@@ -2514,24 +2523,20 @@ window.Hub = {
   // Every week has its OWN videos, thumbnails and titles — nothing is shared across weeks.
   videosByWeek:{
     1:{
-      'concept-patterns':{title:'We Are at the Park',              src:'assets/videos/c7w1_concept_1.mp4?v=3', thumb:'assets/videos/thumbs/c7w1_concept_1.png?v=2'},
-      'concept-bigger':  {title:'It Is an AB, AABB, AAB or ABBB Pattern', src:'assets/videos/c7w1_concept_2.mp4?v=5', thumb:'assets/videos/thumbs/c7w1_concept_2.png?v=4'},
-      'poem':            {title:'The Pattern Game',                src:'assets/videos/c7w1_literature.mp4?v=17', thumb:'assets/videos/thumbs/c7w1_literature.png?v=14'}
+      'concept-patterns':{title:'We Are at the Park',              src:'assets/videos/c7w1_concept.mp4?v=1', thumb:'assets/videos/thumbs/c7w1_concept.png?v=2'},
+      'poem':            {title:'C-7 · Week 1 · Math Literature — The Pattern Game',                src:'assets/videos/c7w1_literature.mp4?v=17', thumb:'assets/videos/thumbs/c7w1_literature.png?v=15'}
     },
     2:{
-      'concept-patterns':{title:'Welcome to My Garden',            src:'assets/videos/c7w2_concept_1.mp4?v=6', thumb:'assets/videos/thumbs/c7w2_concept_1.png?v=6'},
-      'concept-bigger':  {title:'It Is an ABC, AABC or AABCC Pattern', src:'assets/videos/c7w2_concept_2.mp4?v=6', thumb:'assets/videos/thumbs/c7w2_concept_2.png?v=5'},
-      'poem':            {title:'Math Literature',                 src:'assets/videos/c7w2_literature.mp4?v=5', thumb:'assets/videos/thumbs/c7w2_literature.png?v=4'}
+      'concept-patterns':{title:'Welcome to My Garden',            src:'assets/videos/c7w2_concept.mp4?v=1', thumb:'assets/videos/thumbs/c7w2_concept.png?v=2'},
+      'poem':            {title:'C-7 · Week 2 · Math Literature',                 src:'assets/videos/c7w2_literature.mp4?v=5', thumb:'assets/videos/thumbs/c7w2_literature.png?v=5'}
     },
     3:{
-      'concept-patterns':{title:'We Are in the Yard',               src:'assets/videos/c7w3_concept_1.mp4?v=2', thumb:'assets/videos/thumbs/c7w3_concept_1.png?v=1'},
-      'concept-bigger':  {title:'It Is an ABCD, CDAB, AABCD or ABCDD Pattern', src:'assets/videos/c7w3_concept_2.mp4?v=2', thumb:'assets/videos/thumbs/c7w3_concept_2.png?v=1'},
-      'poem':            {title:'Math Literature',                 src:'assets/videos/c7w3_literature.mp4?v=2', thumb:'assets/videos/thumbs/c7w3_literature.png?v=1'}
+      'concept-patterns':{title:'We Are in the Yard',               src:'assets/videos/c7w3_concept.mp4?v=1', thumb:'assets/videos/thumbs/c7w3_concept.png?v=2'},
+      'poem':            {title:'C-7 · Week 3 · Math Literature',                 src:'assets/videos/c7w3_literature.mp4?v=2', thumb:'assets/videos/thumbs/c7w3_literature.png?v=2'}
     },
     4:{
-      'concept-patterns':{title:'We Are in the Cave',             src:'assets/videos/c7w4_concept_1.mp4', thumb:'assets/videos/thumbs/c7w4_concept_1.png'},
-      'concept-bigger':  {title:'It Is an ABC, AAAB, AABC or AABCD Pattern', src:'assets/videos/c7w4_concept_2.mp4', thumb:'assets/videos/thumbs/c7w4_concept_2.png'},
-      'poem':            {title:'Math Literature',                 src:'assets/videos/c7w4_literature.mp4', thumb:'assets/videos/thumbs/c7w4_literature.png'}
+      'concept-patterns':{title:'We Are in the Cave',             src:'assets/videos/c7w4_concept.mp4?v=1', thumb:'assets/videos/thumbs/c7w4_concept.png?v=2'},
+      'poem':            {title:'C-7 · Week 4 · Math Literature',                 src:'assets/videos/c7w4_literature.mp4?v=2', thumb:'assets/videos/thumbs/c7w4_literature.png?v=2'}
     }
   },
   get videos(){ return this.videosByWeek[this.week] || this.videosByWeek[1]; },
@@ -2903,17 +2908,11 @@ window.Hub = {
   },
   setHubReady(week){
     const live=[1,2,3,4].includes(Number(week));   // weeks that are actually built
-    const unavailableVideos=Number(week)===4
-      ? new Set(['concept-patterns','concept-bigger','poem'])
-      : new Set();
     const hub=document.getElementById('hub');
     if(hub) hub.classList.toggle('is-locked', !live);
     document.querySelectorAll('#hub [data-launch]').forEach(el=>{
-      const unavailable=el.dataset.launch==='video' && unavailableVideos.has(el.dataset.act);
-      el.disabled=!live || unavailable;
-      el.setAttribute('aria-disabled', (!live || unavailable)?'true':'false');
-      const card=el.closest('.hubCard');
-      if(card) card.classList.toggle('is-pending', unavailable);
+      el.disabled=!live;
+      el.setAttribute('aria-disabled', live?'false':'true');
     });
   },
   openWeek(week){
