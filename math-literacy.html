@@ -63,6 +63,13 @@
       linear-gradient(165deg,#ffe8ef 0%,#fff1e0 45%,#ffe9d4 100%);}
   @supports (height:100dvh){#weeks{min-height:100dvh;}}
   #weeks.hide{display:none;}
+  /* "Go to GP English" button: centered under the logo, links to this level's weekly page. */
+  .siteHomeBtn{appearance:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:.45em;
+    font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(14px,2.1vh,19px);color:#fff;letter-spacing:.01em;
+    padding:.62em 1.5em;border-radius:999px;background:linear-gradient(155deg,#8be0a0 0%,#3cba7a 55%,#278754 100%);
+    box-shadow:0 3px 0 #1f6e44,0 5px 14px rgba(0,0,0,.2);transition:transform .08s;}
+  .siteHomeBtn:hover{filter:brightness(1.05);}
+  .siteHomeBtn:active{transform:translateY(2px);box-shadow:0 1px 0 #1f6e44,0 2px 6px rgba(0,0,0,.2);}
   .weeksHeader{display:flex;flex-direction:column;align-items:center;gap:12px;flex:none;}
   .weeksLogo{width:clamp(78px,11vh,120px);height:auto;object-fit:contain;display:block;margin-bottom:2px;}
   .weeksLevel{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(16px,2.4vh,22px);
@@ -943,6 +950,7 @@
     <div class="weeksLevel">Level C</div>
     <div class="weeksTitle">Choose a Week</div>
   </header>
+  <button type="button" class="siteHomeBtn" onclick="location.href='https://www.gpeisenglish.com/els-c-m7'">Go to GP English</button>
   <div class="weeksRow" role="navigation" aria-label="Level C weeks">
     <button type="button" class="weekBtn" data-week="1" aria-label="Open Week 1">
       <span class="weekArt"><img src="assets/c7/week_1_thumb.png?v=2" alt=""></span>
@@ -1234,6 +1242,7 @@
         <button type="button" class="miniBtn" id="t2_same">Same number!</button>
       </div>
       <div class="eq" id="t2_eq"></div>
+      <div class="eq raMul" id="t2_mul" style="display:none"></div>
       <div class="numpad choiceZone" id="t2_pad" style="display:none"></div>
     </div>
     <div class="shadow L"></div><div class="shadow R"></div>
@@ -1575,11 +1584,11 @@ const App={ engines:{}, home(){ if(window.Hub) Hub.showMenu(); }, back(){ if(win
 const K=makeCKit('cp'), $=K.$;
 const ACTS_W1={
   a1:{ ribbon:'Rules 1, 2, 3 and 4',
-       intro:{voice:'cp_a1_intro', video:'assets/c7/talk_cp_a1.webm?v=2', still:'assets/c7/girl_idle.png',
+       intro:{voice:'cp_a1_intro', video:'assets/c7/talk_cp_a1.webm?v=3', still:'assets/c7/talk_cp_a1_idle.png?v=1',
               text:'Use rules <b>1</b>, <b>2</b>, <b>3</b> and <b>4</b><br>to create patterns!', est:9000},
        rounds:[ {rule:1, strip:'CT______'}, {rule:2, strip:'__TT__TT'}, {rule:3, strip:'CCT___CCT'}, {rule:4, strip:'C___C___'} ]},
   a2:{ ribbon:'Make your own rule',
-       intro:{voice:'cp_a2_intro', video:'assets/c7/talk_cp_a2.webm?v=2', still:'assets/c7/girl_idle.png',
+       intro:{voice:'cp_a2_intro', video:'assets/c7/talk_cp_a2.webm?v=3', still:'assets/c7/talk_cp_a2_idle.png?v=1',
               text:'Make your <b>own</b> rule.<br>Then use it with the animals!', est:8500},
        /* set a rule, confirm it, then solve with this week's book animals */
        rounds:[ {free:5, len:6}, {apply:5, an:['cat','dog']},
@@ -1591,7 +1600,7 @@ const ACTS_W2={
   /* page 10 - "Use rules 1, 2 and 3 to create patterns." The four strips are the page's four
      strips: rule 1 short, rule 2 with only the circle+triangle given, then rule 3 twice. */
   a1:{ ribbon:'Rules 1, 2 and 3',
-       intro:{voice:'w2_cp_a1_intro', video:'assets/c7w2/talk_cp_a1.webm', still:'assets/c7w2/talk_cp_a1_idle.png',
+       intro:{voice:'w2_cp_a1_intro', video:'assets/c7w2/talk_cp_a1.webm?v=2', still:'assets/c7w2/talk_cp_a1_idle.png?v=2',
               text:'Use rules <b>1</b>, <b>2</b> and <b>3</b><br>to create patterns!', est:9000},
        rounds:[ {rule:1, strip:'SCT___'},
                 {rule:2, strip:'__CT__CT'},
@@ -1600,7 +1609,7 @@ const ACTS_W2={
   /* page 11 - "Use pattern rule 4 to create patterns. Then make your own."  The second strip is
      given completely blank on the page, so the child works from the rule card alone. */
   a2:{ ribbon:'Rule 4, then your own',
-       intro:{voice:'w2_cp_a2_intro', video:'assets/c7w2/talk_cp_a2.webm', still:'assets/c7w2/talk_cp_a2_idle.png',
+       intro:{voice:'w2_cp_a2_intro', video:'assets/c7w2/talk_cp_a2.webm?v=2', still:'assets/c7w2/talk_cp_a2_idle.png?v=2',
               text:'Use pattern rule <b>4</b>.<br>Then make your <b>own</b>!', est:8500},
        rounds:[ {rule:4, strip:'SS___SS___'},
                 {rule:4, strip:'__________'},
@@ -2054,21 +2063,21 @@ const K=makeCKit('ra'), $=K.$;
    boy on workbook p.13 asks for: "Let us add and multiply together!" */
 const ACTS_W1={
   a1:{ heroL:'assets/c7/girl_idle.png', heroR:'assets/c7/boy_idle.png',
-       intro:{voice:'ra_a1_intro', video:'assets/c7/talk_ra_a1.webm', still:'assets/c7/girl_idle.png',
+       intro:{voice:'ra_a1_intro', video:'assets/c7/talk_ra_a1.webm?v=2', still:'assets/c7/talk_ra_a1_idle.png?v=1',
               text:'Learn <b>repeated addition</b>.<br>Add the <b>same</b> number!', est:7000},
        rounds:[ {an:'cat',n:1},{an:'dog',n:2},{an:'squirrel',n:3} ] },
   a2:{ heroL:'assets/c7/boy_idle.png', heroR:'assets/c7/girl_idle.png',
-       intro:{voice:'ra_a2_intro', video:'assets/c7/talk_ra_a2.webm', still:'assets/c7/boy_idle.png',
+       intro:{voice:'ra_a2_intro', video:'assets/c7/talk_ra_a2.webm?v=2', still:'assets/c7/talk_ra_a2_idle.png?v=1',
               text:'It is easy to add the <b>same</b> number!', est:6000},
        rounds:[ {an:'bat',n:4},{an:'eagle',n:5},{an:'rabbit',n:6} ] }
 };
 const ACTS_W2={
   a1:{ heroL:'assets/c7/girl_idle.png', heroR:'assets/c7/boy_idle.png',
-       intro:{voice:'w2_ra_a1_intro', video:'assets/c7w2/talk_ra_a1.webm', still:'assets/c7w2/talk_ra_a1_idle.png',
+       intro:{voice:'w2_ra_a1_intro', video:'assets/c7w2/talk_ra_a1.webm?v=2', still:'assets/c7w2/talk_ra_a1_idle.png?v=2',
               text:'Add the <b>same</b> number <b>three</b> times.<br>Then <b>multiply</b>!', est:7500},
        rounds:[ {an:'cactus',n:1},{an:'sunflower',n:2},{an:'rose',n:3} ] },
   a2:{ heroL:'assets/c7/boy_idle.png', heroR:'assets/c7/girl_idle.png',
-       intro:{voice:'w2_ra_a2_intro', video:'assets/c7w2/talk_ra_a2.webm', still:'assets/c7w2/talk_ra_a2_idle.png',
+       intro:{voice:'w2_ra_a2_intro', video:'assets/c7w2/talk_ra_a2.webm?v=2', still:'assets/c7w2/talk_ra_a2_idle.png?v=2',
               text:'Let us <b>add</b> and <b>multiply</b> together!', est:6500},
        rounds:[ {an:'cosmos',n:4},{an:'ant',n:5},{an:'bee',n:6} ] }
 };
@@ -2244,7 +2253,7 @@ function start(a){ K.stopAll();
   const w3=((window.Hub&&Hub.week)===3);
   const w4=((window.Hub&&Hub.week)===4);
   ACTS=w4?ACTS_W4:w3?ACTS_W3:w2?ACTS_W2:ACTS_W1; ADD=(w4||w3)?4:w2?3:2;
-  MUL=w3||w4;                               // W1/W2 pages are addition only; W3 and W4 print n x m too
+  MUL=w2||w3||w4;                           // W1 = repeated-addition intro only; W2-W4 also show n x m (= the same total)
   act=ACTS[a]?a:'a1'; roundIdx=0; score=0; locked=true;
   buildPad();
   /* the workbook header belongs to the PAGE, so it is per activity, exactly as in cp */
@@ -2356,8 +2365,8 @@ function start(){ K.stopAll();
   K.setHeroes('assets/c7/girl_idle.png','assets/c7/boy_idle.png');
   K.buildStars(ROUNDS.length); K.litStars(0); K.preloadHeroes(); renderRound();
   K.intro({voice:vk('t1_intro'),
-    video:(w3?'assets/c7w3/talk_tm1.webm?v=3':w2?'assets/c7w2/talk_tm1.webm':'assets/c7/talk_tm1.webm'),
-    still:(w3?'assets/c7w3/talk_tm1_idle.png?v=3':w2?'assets/c7w2/talk_tm1_idle.png':'assets/c7/girl_idle.png'),
+    video:(w3?'assets/c7w3/talk_tm1.webm?v=3':w2?'assets/c7w2/talk_tm1.webm?v=2':'assets/c7/talk_tm1.webm?v=2'),
+    still:(w3?'assets/c7w3/talk_tm1_idle.png?v=3':w2?'assets/c7w2/talk_tm1_idle.png?v=2':'assets/c7/talk_tm1_idle.png?v=1'),
     text:(w3?'Look at the <b>yard</b>.<br>Which <b>rule</b> does it follow?'
           :w2?'Look at the <b>garden</b>.<br>Which <b>rule</b> does it follow?'
              :'Look at the animals.<br>Which <b>rule</b> do they follow?'), est:7500},()=>{ locked=false; }); }
@@ -2405,10 +2414,15 @@ K.reg('w4_t2_more','assets/voice/w4/t2_more.mp3','Not yet. Count again and make 
 K.reg('w4_t2_toomany','assets/voice/w4/t2_toomany.mp3','Too many! Tap one to take it away.');
 for(const n of [2,3,4,5,6]){ K.reg('w4_t2_done_'+n,'assets/voice/w4/t2_done_'+n+'.mp3',
     NUM_WORDS[n]+' plus '+NUM_WORDS[n]+' plus '+NUM_WORDS[n]+' plus '+NUM_WORDS[n]+' equals '+NUM_WORDS[4*n]+'!'); }
+/* the "Now multiply!" prompt reuses Repeated Addition's own per-week ra_mul recordings */
+K.reg('t2_mul','assets/voice/w4/ra_mul.mp3','Equal groups of the same number. Now multiply!');   /* W1: generic take fits two groups */
+K.reg('w2_t2_mul','assets/voice/w2/ra_mul.mp3','Three groups of the same number. Now multiply!');
+K.reg('w3_t2_mul','assets/voice/w3/ra_mul.mp3','Four groups of the same number. Now multiply!');
+K.reg('w4_t2_mul','assets/voice/w4/ra_mul.mp3','Equal groups of the same number. Now multiply!');
 const PRAISE=['Great job!','Excellent!','Amazing!'];
-let ROUNDS=[], roundIdx=0, score=0, locked=true, phase=0, MINE=1, cur=1, counts=[];
+let ROUNDS=[], roundIdx=0, score=0, locked=true, phase=0, MINE=1, cur=1, counts=[], MUL=false;
 let groups=[], boxes=[];
-const row=$('row'), eqEl=$('eq'), addBtn=$('add'), sameBtn=$('same'), pad=$('pad');
+const row=$('row'), eqEl=$('eq'), mulEl=$('mul'), addBtn=$('add'), sameBtn=$('same'), pad=$('pad');
 function gridFor(n){ return n<=1?[1,1]:n<=2?[2,1]:n<=4?[2,2]:n<=6?[3,2]:n<=9?[3,3]:[4,3]; }
 function fillGroup(el,an,n){ const g=gridFor(Math.max(n,1)); el.style.gridTemplateColumns='repeat('+g[0]+',1fr)'; el.style.gridTemplateRows='repeat('+g[1]+',1fr)';
   el.innerHTML=Array.from({length:n},(_,i)=>'<div class="an" data-i="'+i+'"><img src="'+ANIMALS[an].src+'" alt=""><span class="num">'+(i+1)+'</span></div>').join(''); }
@@ -2431,6 +2445,7 @@ function renderRound(){
   boxes[0].textContent=r.n; boxes[0].className='nbox filled';
   addBtn.querySelector('img').src=ANIMALS[r.an].src; addBtn.classList.remove('dim'); addBtn.classList.add('pulsing');
   sameBtn.classList.remove('hideBtn','pulsing'); pad.style.display='none'; [...pad.children].forEach(b=>b.classList.remove('dim'));
+  mulEl.style.display='none'; mulEl.innerHTML='';
   markGroup();
   $('qPre').innerHTML='Make the <b>same</b> number of <b>'+ANIMALS[r.an].pl+'</b>.';
   $('qAsk').innerHTML='Tap <b>+</b> to add, then <b>Same number!</b>';
@@ -2460,24 +2475,48 @@ function checkSame(){
   $('qAsk').innerHTML='How many <b>altogether</b>?';
   K.say(vk('t2_ok'),null,5000);
 }
-function tapNum(btn){
-  if(locked||phase!==1) return; K.play('tap'); const r=ROUNDS[roundIdx]; const n=Number(btn.dataset.n);
-  if(n!==(MINE+1)*r.n){ K.wrongOn(btn); return; }
-  K.play('pop'); const ansBox=boxes[boxes.length-1]; ansBox.textContent=n; ansBox.className='nbox filled';
+function finishRound(r){
+  const w=NUM_WORDS, T=(MINE+1)*r.n, g=MINE+1;
   locked=true; K.play('correct'); score++; K.litStars(score);
   [...pad.children].forEach(b=>b.classList.add('dim'));
-  groups.forEach(g=>{ g.classList.remove('bounce'); void g.offsetWidth; g.classList.add('bounce'); });
-  const w=NUM_WORDS, T=(MINE+1)*r.n;
-  /* one addend per group, however many groups this week uses - the old two-branch version
-     said "plus" three times whatever MINE was, which is wrong the moment W3 makes four. */
-  const html=capFirst(Array(MINE+1).fill(w[r.n]).join(' plus '))+' equals <b>'+w[T]+'</b>.';
+  groups.forEach(gp=>{ gp.classList.remove('bounce'); void gp.offsetWidth; gp.classList.add('bounce'); });
+  /* one addend per group. On the multi-group weeks (3-4 groups) also say it as multiplication,
+     REUSING Repeated Addition's own per-week celebration recording (same numbers, same words) so
+     the audio matches the on-screen multiplication. 2-group W1 stays the addition sentence. */
+  let html=capFirst(Array(g).fill(w[r.n]).join(' plus '))+' equals <b>'+w[T]+'</b>.', vkey;
+  if(g>=3){ html=html.replace('<b>','')+' '+capFirst(w[r.n])+' times '+w[g]+' equals <b>'+w[T]+'</b>.';
+            vkey=(g===3?'w2_ra_done_':'w3_ra_done_')+r.n; }   // g=3 -> "x three"; g=4 (W3 & W4) -> "x four"
+  else    { vkey=vk('t2_done_'+r.n); }
   const seq=K.runSeq;
   K.later(()=>{ if(seq!==K.runSeq) return;
     /* the total, counted out */
     const ic=Array.from({length:T},()=>'<img class="celIco" src="'+ANIMALS[r.an].src+'" alt="">').join('');
-    K.celebrate(vk('t2_done_'+r.n), PRAISE[roundIdx%3], html, ()=>{ roundIdx++;
+    K.celebrate(vkey, PRAISE[roundIdx%3], html, ()=>{ roundIdx++;
       if(roundIdx<ROUNDS.length){ locked=false; renderRound(); } else K.endGame(ROUNDS.length,score); }, ic);
   },550);
+}
+function tapNum(btn){
+  if(locked) return; const r=ROUNDS[roundIdx], n=Number(btn.dataset.n), T=(MINE+1)*r.n;
+  if(phase===1){                                  // answering the addition total
+    K.play('tap');
+    if(n!==T){ K.wrongOn(btn); return; }
+    K.play('pop'); const ansBox=boxes[boxes.length-1]; ansBox.textContent=n; ansBox.className='nbox filled';
+    if(MUL){                                       // the SAME total, now shown as n x (groups)
+      phase=2;
+      mulEl.style.display='';
+      mulEl.innerHTML='<span class="nbox filled">'+r.n+'</span><span>&times;</span><span class="nbox filled">'+(MINE+1)+'</span><span>=</span><span class="nbox mulAns next">?</span>';
+      $('qPre').innerHTML='<b>'+(MINE+1)+'</b> groups of <b>'+r.n+'</b>.';
+      $('qAsk').innerHTML='Now <b>multiply</b>!';
+      K.say(vk('t2_mul'),null,4200); return;
+    }
+    finishRound(r); return;
+  }
+  if(phase===2){                                  // answering the multiplication (same total)
+    K.play('tap');
+    if(n!==T){ K.wrongOn(btn); return; }
+    K.play('pop'); const mb=mulEl.querySelector('.mulAns'); mb.textContent=n; mb.className='nbox mulAns filled';
+    finishRound(r); return;
+  }
 }
 /* The child only ever taps the TOTAL here, so a 1..24 keypad is four rows of which at most
    three can be right - the same "too many that are not needed" the Repeated Addition pad had,
@@ -2501,13 +2540,14 @@ addBtn.addEventListener('click',addOne); sameBtn.addEventListener('click',checkS
 function start(){ K.stopAll();
   const w2=((window.Hub&&Hub.week)===2), w3=((window.Hub&&Hub.week)===3), w4=((window.Hub&&Hub.week)===4);
   MINE=(w4||w3)?3:w2?2:1;
+  MUL=true;                                  // every week: two-or-more equal groups also gets the "Now multiply!" step (n x groups = the same total)
   ROUNDS=shuffle((w4?BANK_W4:w3?BANK_W3:w2?BANK_W2:BANK_W1).slice()).slice(0,3); roundIdx=0; score=0; locked=true;
   buildPad();
   K.setHeroes('assets/c7/boy_idle.png','assets/c7/girl_idle.png');
   K.buildStars(ROUNDS.length); K.litStars(0); K.preloadHeroes(); renderRound();
   K.intro({voice:vk('t2_intro'),
-    video:(w4?'assets/c7w4/talk_tm2.webm?v=6':w3?'assets/c7w3/talk_tm2.webm?v=3':w2?'assets/c7w2/talk_tm2.webm':'assets/c7/talk_tm2.webm'),
-    still:(w4?'assets/c7w4/talk_tm2_idle.png?v=6':w3?'assets/c7w3/talk_tm2_idle.png?v=3':w2?'assets/c7w2/talk_tm2_idle.png':'assets/c7/boy_idle.png'),
+    video:(w4?'assets/c7w4/talk_tm2.webm?v=6':w3?'assets/c7w3/talk_tm2.webm?v=3':w2?'assets/c7w2/talk_tm2.webm?v=2':'assets/c7/talk_tm2.webm?v=2'),
+    still:(w4?'assets/c7w4/talk_tm2_idle.png?v=6':w3?'assets/c7w3/talk_tm2_idle.png?v=3':w2?'assets/c7w2/talk_tm2_idle.png?v=2':'assets/c7/talk_tm2_idle.png?v=1'),
     text:(w4?'Four equal groups is the<br>same as <b>multiplying</b>!'
           :w3?'Make <b>four</b> groups with the<br><b>same</b> number. Then add!'
           :w2?'Make the <b>same</b> number<br><b>three</b> times. Then add!'
@@ -2523,7 +2563,7 @@ window.Hub = {
   // Every week has its OWN videos, thumbnails and titles — nothing is shared across weeks.
   videosByWeek:{
     1:{
-      'concept-patterns':{title:'We Are at the Park',              src:'assets/videos/c7w1_concept.mp4?v=1', thumb:'assets/videos/thumbs/c7w1_concept.png?v=2'},
+      'concept-patterns':{title:'We Are at the Park',              src:'assets/videos/c7w1_concept.mp4?v=2', thumb:'assets/videos/thumbs/c7w1_concept.png?v=2'},
       'poem':            {title:'C-7 · Week 1 · Math Literature — The Pattern Game',                src:'assets/videos/c7w1_literature.mp4?v=17', thumb:'assets/videos/thumbs/c7w1_literature.png?v=15'}
     },
     2:{
