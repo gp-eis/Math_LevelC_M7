@@ -532,6 +532,32 @@
     border-radius:14px;background:#fff6f0;display:none;
     object-fit:contain;object-position:center;}
   .vidShell.is-ready #v_player{pointer-events:none;}
+  /* FIX 5: big fun play/pause toggle UNDER the video frame (native controls removed).
+     Always occupies a strip so the video sizes above it; invisible until playback starts. */
+  .vidToggle{flex:0 0 auto;margin:0.6vh 0 0.2vh;width:9.5vh;height:9.5vh;border:none;border-radius:50%;
+    background:#3fbf6a;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;
+    box-shadow:0 0.6vh 0 rgba(30,120,60,.5),0 0.4vh 1.4vh rgba(0,0,0,.18);
+    opacity:0;pointer-events:none;transition:transform .14s ease,box-shadow .14s ease,opacity .22s ease;}
+  .vidToggle .ic{width:5vh;height:5vh;fill:#fff;}
+  .vidToggle .ic-pause{display:none;}
+  .vidToggle.is-playing .ic-play{display:none;}
+  .vidToggle.is-playing .ic-pause{display:block;}
+  .vidToggle.is-active{opacity:1;pointer-events:auto;animation:vidTogglePulse 1.6s ease-in-out infinite;}
+  .vidToggle.is-active:hover{transform:translateY(-0.2vh);}
+  .vidToggle.is-active:active{transform:translateY(0.3vh) scale(.94);box-shadow:0 0.2vh 0 rgba(30,120,60,.5);animation:none;}
+  @keyframes vidTogglePulse{0%,100%{box-shadow:0 0.6vh 0 rgba(30,120,60,.5),0 0 0 0 rgba(63,191,106,.45);}
+    50%{box-shadow:0 0.6vh 0 rgba(30,120,60,.5),0 0 0 1.4vh rgba(63,191,106,0);}}
+  /* FIX 6: shared Next arrow — every activity's round advance waits for a tap (no auto-advance) */
+  .kNext{position:fixed;right:2.4vh;bottom:2.4vh;z-index:60;width:9vh;height:9vh;border:none;border-radius:50%;
+    background:#3fbf6a;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;
+    box-shadow:0 0.6vh 0 rgba(30,120,60,.5),0 0.4vh 1.4vh rgba(0,0,0,.2);
+    opacity:0;transform:scale(.6);pointer-events:none;transition:opacity .2s ease,transform .2s cubic-bezier(.34,1.56,.64,1);}
+  .kNext[hidden]{display:none;}
+  .kNext svg{width:5vh;height:5vh;stroke:#fff;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+  .kNext.on{opacity:1;transform:scale(1);pointer-events:auto;animation:kNextPulse 1.15s ease-in-out infinite;}
+  .kNext.on:active{transform:scale(.92);animation:none;}
+  @keyframes kNextPulse{0%,100%{box-shadow:0 0.6vh 0 rgba(30,120,60,.5),0 0 0 0 rgba(63,191,106,.45);}
+    50%{box-shadow:0 0.6vh 0 rgba(30,120,60,.5),0 0 0 1.5vh rgba(63,191,106,0);}}
   .vidStartBtn{appearance:none;border:none;background:transparent;padding:0;cursor:pointer;
     position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.92);
     width:min(38%,280px);z-index:6;opacity:0;pointer-events:none;
@@ -586,8 +612,8 @@
     background:#fff;box-shadow:0 3px 0 rgba(224,66,79,.35);cursor:pointer;display:none;align-items:center;justify-content:center;}
   #c_backBtn svg{width:2.8vh;height:2.8vh;stroke:var(--red);stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round;}
   #c_backBtn:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(224,66,79,.3);}
-  .conceptShell.is-watching #c_homeBtn{display:none;}
-  .conceptShell.is-watching #c_backBtn{display:flex;}
+  .conceptShell.is-watching #c_homeBtn{display:flex;}            /* FIX 4: keep Home reachable while a video plays */
+  .conceptShell.is-watching #c_backBtn{display:flex;left:6.2vh;}  /* Back sits beside Home, not stacked on it */
   .conceptStage{position:relative;flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;gap:clamp(16px,3vw,36px);}
   .conceptPick{appearance:none;border:none;background:transparent;cursor:pointer;padding:0;
     width:min(42%,420px);display:flex;flex-direction:column;align-items:center;gap:12px;
@@ -941,6 +967,18 @@
   .addBtn.pulsing{animation:choicePulse 1.15s ease-in-out infinite;}
   .addBtn.dim{opacity:.45;pointer-events:none;animation:none;}
 </style>
+<style id="gpTouchTarget">
+/* Touch-target floor, 2026-09-02 (math-site lane, director-authorised 17:16).
+   The in-game Home/Back are sized in 5cqh / 5vh, which measured 35.1 px at a
+   1366x768 classroom viewport and 33 px in a smaller pane - under the 44 px
+   minimum in WCAG 2.5.8, Apple HIG and Material. Only the BOX grows: the svg
+   icons keep their cqh/vh sizing, so nothing looks different until you tap it.
+   The Back offsets are floored too, because at any container under ~880 px tall
+   a 44 px Home would otherwise run into Back (measured gap was only 6.7 px). */
+.homeBtn,.backBtn,[id$="_homeBtn"],[id$="_backBtn"]{min-width:44px;min-height:44px;}
+#ap_backBtn{left:max(6.2vh,54px);}
+.cgame .backBtn{left:max(6.5cqh,54px);}
+</style>
 </head>
 <body>
 
@@ -1049,12 +1087,16 @@
     <button id="v_homeBtn" title="Back"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
     <div class="vidTitle" id="v_title">Video</div>
     <div class="vidStage">
-      <video id="v_player" controls playsinline preload="metadata"></video>
+      <video id="v_player" playsinline preload="metadata"></video>
       <button type="button" id="v_startBtn" class="vidStartBtn" aria-label="Play video" hidden>
         <img src="assets/play_button.png" alt="">
       </button>
       <div id="v_missing">Video coming soon — add the file to the assets folder.</div>
     </div>
+    <button type="button" id="v_playPause" class="vidToggle" aria-label="Play or pause video">
+      <svg class="ic ic-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      <svg class="ic ic-pause" viewBox="0 0 24 24"><path d="M7 5h3.4v14H7z M13.6 5H17v14h-3.4z"/></svg>
+    </button>
   </div>
 </div>
 
@@ -1088,12 +1130,16 @@
         </span>
         <span>We Are at the Park</span>
       </button>
-      <video id="c_player" controls playsinline preload="metadata" style="background:#fff6f0"></video>
+      <video id="c_player" playsinline preload="metadata" style="background:#fff6f0"></video>
       <button type="button" id="c_startBtn" class="conceptStartBtn" aria-label="Play video" hidden>
         <img src="assets/play_button.png" alt="">
       </button>
       <div id="c_missing">Video coming soon.</div>
     </div>
+    <button type="button" id="c_playPause" class="vidToggle" aria-label="Play or pause video">
+      <svg class="ic ic-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      <svg class="ic ic-pause" viewBox="0 0 24 24"><path d="M7 5h3.4v14H7z M13.6 5H17v14h-3.4z"/></svg>
+    </button>
   </div>
 </div>
 
@@ -1398,7 +1444,7 @@ function makeCKit(pfx){
   const $=id=>document.getElementById(pfx+'_'+id);
   const STAR='M12 2l3 6.3 6.9.9-5 4.8 1.2 6.9L12 18.6 5.9 21l1.2-6.9-5-4.8 6.9-.9z';
   const K={ $, STAR, runSeq:0, SFX:{}, sayNode:null, cheerNode:null, fwSound:null, timers:[] };
-  K.reg=function(name,src,fallbackText,vol){ let ok=false; const a=new Audio(src); a.preload='auto'; a.volume=(vol==null?1:vol);
+  K.reg=function(name,src,fallbackText,vol){ src=/\?/.test(src)?src:src+'?v=pace3'; let ok=false; const a=new Audio(src); a.preload='auto'; a.volume=(vol==null?1:vol);
     a.addEventListener('canplaythrough',()=>{ok=true;},{once:true}); a.addEventListener('error',()=>{ok=false;});
     K.SFX[name]={a,ok:()=>ok,fallbackText}; };
   K.stopSound=function(n){ if(n){ try{n.pause(); n.currentTime=0;}catch(e){} } return null; };
@@ -1410,6 +1456,11 @@ function makeCKit(pfx){
     speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){} };
   K.later=function(fn,ms){ const id=setTimeout(fn,ms); K.timers.push(id); return id; };
   K.clearTimers=function(){ K.timers.forEach(clearTimeout); K.timers=[]; };
+  // FIX 6: shared Next arrow — celebrate() shows it and defers the round advance until it is tapped.
+  K.hideNext=function(){ var b=document.getElementById('k_nextBtn'); if(b){ b.classList.remove('on'); b.hidden=true; b._go=null; } };
+  K.showNext=function(go){ var b=document.getElementById('k_nextBtn'); if(!b){ go&&go(); return; }
+    if(!b._wired){ b._wired=true; b.addEventListener('click',function(){ var g=b._go; b._go=null; b.classList.remove('on'); b.hidden=true; if(g) g(); }); }
+    b._go=go; b.hidden=false; requestAnimationFrame(function(){ b.classList.add('on'); }); };
   /* say a line; cb when it ends (runSeq-guarded); est = fallback ms */
   K.say=function(name,cb,est){ const seq=K.runSeq; K.sayNode=K.stopSound(K.sayNode); try{speechSynthesis.cancel();}catch(e){} K.sayNode=K.play(name);
     let done=false; const fin=()=>{ if(done||seq!==K.runSeq) return; done=true; cb&&cb(); };
@@ -1553,12 +1604,12 @@ function makeCKit(pfx){
       (function ramp(){const k=Math.min(1,(performance.now()-t0)/1400); n.volume=target*k; if(k<1) requestAnimationFrame(ramp);})(); K.cheerNode=n; }catch(e){} }
     K.playEndFireworks(); };
   K.stopAll=function(){ K.runSeq++; K.clearTimers(); K.sayNode=K.stopSound(K.sayNode); K.cheerNode=K.stopSound(K.cheerNode); K.fanfareNode=K.stopSound(K.fanfareNode);
-    K.stopEndFireworks(); try{speechSynthesis.cancel();}catch(e){} K.hideSentence(); K.resetHeroes(); K.hideIntro(); $('end').style.display='none'; };
+    K.stopEndFireworks(); try{speechSynthesis.cancel();}catch(e){} K.hideSentence(); K.resetHeroes(); K.hideIntro(); K.hideNext(); $('end').style.display='none'; };
   K.celebrate=function(voiceKey,praise,html,onDone,icons){ const seq=K.runSeq;
     K.showSentence(praise,html,icons); K.sayNode=K.stopSound(K.sayNode); K.sayNode=K.play(voiceKey);
     K.later(()=>{ if(seq===K.runSeq) K.playHeroes(); },500);
     let advanced=false; const finish=()=>{ if(advanced||seq!==K.runSeq) return; advanced=true; K.clearTimers();
-      K.hideSentence(); K.sayNode=K.stopSound(K.sayNode); try{speechSynthesis.cancel();}catch(e){} K.resetHeroes(); onDone&&onDone(); };
+      K.hideSentence(); K.sayNode=K.stopSound(K.sayNode); try{speechSynthesis.cancel();}catch(e){} K.resetHeroes(); K.showNext(onDone); };
     const hold=1400;
     if(K.sayNode){ K.sayNode.addEventListener('ended',()=>{ if(seq===K.runSeq) K.later(finish,hold); },{once:true});
       const d=K.sayNode.duration; K.later(finish,(typeof d==='number'&&isFinite(d)&&d>1)?(d*1000+hold+500):9000); }
@@ -3058,6 +3109,25 @@ document.getElementById('v_homeBtn').addEventListener('click',()=>{
 document.getElementById('v_startBtn').addEventListener('click',()=>{
   pressThen(document.getElementById('v_startBtn'), ()=>{ if(window.Hub) Hub.startVideoPlayback(); });
 });
+// FIX 5: fun play/pause toggle under each video frame. Event-driven off the <video>,
+// so it appears once playback starts and stays clean on pause (no center overlay —
+// native controls were removed). The center start button remains pre-play only.
+(function(){
+  function wireToggle(playerId, toggleId){
+    const player=document.getElementById(playerId), btn=document.getElementById(toggleId);
+    if(!player||!btn) return;
+    let started=false;
+    const reset=()=>{ started=false; btn.classList.remove('is-active','is-playing'); };
+    btn.addEventListener('click',()=>{ if(player.paused){ player.play().catch(()=>{}); } else { player.pause(); } });
+    player.addEventListener('play',   ()=>{ started=true; btn.classList.add('is-active','is-playing'); });
+    player.addEventListener('pause',  ()=>{ if(started) btn.classList.remove('is-playing'); });
+    player.addEventListener('ended',  ()=>{ if(started) btn.classList.remove('is-playing'); });
+    player.addEventListener('emptied',reset);
+    reset();
+  }
+  wireToggle('v_player','v_playPause');
+  wireToggle('c_player','c_playPause');
+})();
 document.getElementById('c_homeBtn').addEventListener('click',()=>{
   pressThen(document.getElementById('c_homeBtn'), ()=>{ if(window.Hub) Hub.showMenu(); });
 });
@@ -3318,5 +3388,6 @@ document.querySelectorAll('#ap_stage .actPickBtn').forEach(btn=>{
 
 
 </script>
+<button type="button" id="k_nextBtn" class="kNext" title="Next" aria-label="Next" hidden><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
 </body>
 </html>
