@@ -980,6 +980,8 @@
 #ap_backBtn{left:max(6.2vh,54px);}
 .cgame .backBtn{left:max(6.5cqh,54px);}
 
+/* ==== TRAIN 2a wrap 1: 16:9 layout tuning applies to landscape / wide screens only ==== */
+@media (orientation:landscape), (min-width:901px){
 /* ================= LANDSCAPE-BATCH : 16:9-first stage, shared by every activity ================= */
   .cgame{
     /* Aspect clamped to a RANGE, not pinned at 16:9: a phone held sideways is ~20:9, WIDER
@@ -1204,7 +1206,8 @@
   /* a one-row pad (W3/W4 need-sets, <= 6 keys) has the room: keep the proportion pass's full-height keys there */
   #t2_app .numpad:not(:has(button:nth-child(7))) button{height:9.5cqh;font-size:5.2cqh;box-shadow:0 4px 0 #d8e0ea;}
 /* ==== end TM2 FIT PASS ==== */
-
+}
+/* ==== end TRAIN 2a wrap 1 ==== */
   /* ==== THUMBNAIL / MARGIN FIX (9/15, William: "i menat the thumbnail" + "there are too
      much margin so increase the size of the thumbnaiil" + "do the same with other videos
      there"): the concept picker's tile grows height-bound to dominate the stage (bare
@@ -1311,6 +1314,8 @@
   .vidSizeBtn svg{width:2.8vh;height:2.8vh;stroke:var(--red,#e0424f);stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round;}
   .vidSizeBtn:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(224,66,79,.3);}
   .conceptShell .vidSizeBtn{right:0;top:0;}
+/* ==== TRAIN 2a wrap 2: 16:9 layout tuning applies to landscape / wide screens only ==== */
+@media (orientation:landscape), (min-width:901px){
   /* ==== ITEM-6 LAYOUT FLAGS (9/16, William: "Fix them"): cascade-last, measured at 1280x720 ====
      tm1 (Which Rule): the enlarged t1 option cards ran 18 px past the pad -> shapes 11->10cqh, card padding 2->1.5cqh, grid gap 2.6->2cqh.
      ra (Repeated Addition): the numpad ran 11 px past the pad -> buttons 9.5->7.6cqh tall, digits 5.2->4.6cqh. */
@@ -1319,7 +1324,8 @@
   #t1_app .ruleOpt{padding:1.1cqh 2.6cqh 0.8cqh;}
   #t1_app .ruleGrid{gap:1.2cqh;}
   #ra_app .numpad button{height:7.6cqh;min-height:0;line-height:1;padding:0;font-size:4.6cqh;}   /* height was the digit's line-height (66px), not min-height */
-
+}
+/* ==== end TRAIN 2a wrap 2 ==== */
   /* ==== KAKAO FIX 2026-09-20 (GP손부장님 via William): (a) the concept caption WRAPS instead of being
      ellipsised - measured 747px of text in a 380px box at 412x915 - and is shown, smaller, on short screens
      instead of hidden; (c) the week picker fits phone LANDSCAPE, where the cards used to run 114px below the
@@ -1371,6 +1377,8 @@
 /* ==== DEAD MENU TILE (2026-09-22): a menu with two options showed a third, dead "Activity 3" tile - the hidden attribute was
    defeated by .actPickBtn{display:flex}. A7 has had this rule since the third tile was introduced; B7/C7 never got it. ==== */
 .actPickBtn[hidden]{display:none!important;}
+/* ==== TRAIN 2a wrap 3: 16:9 layout tuning applies to landscape / wide screens only ==== */
+@media (orientation:landscape), (min-width:901px){
 /* ==== TM1 RULE CARD FIT (2026-09-22): the widest W1 rule spilled its card (last triangle chopped on phones/tablets), the cards
    touched at the pulse peak, and the W2/W3 five-shape cards pushed the picture strip over the progress stars. ==== */
 #t1_app .ruleGrid{width:min(100%,96cqh);gap:1.2cqh 2.8cqh;}
@@ -1380,6 +1388,61 @@
 #t1_app .ruleGrid.u5 .ruleOpt{padding:0.8cqh 1.2cqh 0.6cqh;}
 #t1_app .ruleGrid.u5 .ruleOpt .runit.lettered .shp{width:7cqh;height:7cqh;}
 #t1_app .ruleGrid.u5 .ruleOpt .runit.lettered .rl{font-size:3.2cqh;}
+}
+/* ==== end TRAIN 2a wrap 3 ==== */
+/* ==== TRAIN 2a: phones may be held UPRIGHT again - the rotate gate is retired on this level ==== */
+#ls_rotate{display:none!important;}
+/* ==== TRAIN 2a PORTRAIT RULESET C7 (measured upright at 390x844 / 414x896 / 768x1024) ==== */
+@media (orientation:portrait) and (max-width:900px){
+/* (1) GAME HEADER. The touch floor makes home/back 44 px; the portrait-first title was drawn for 27 px buttons and ran under
+   them. (Lifting the buttons above the stage was tried and measured: the panel clips them.) On a narrow upright phone the
+   title sits in the space to the RIGHT of the two buttons, at a size that fits there. */
+@media (max-width:600px){
+  .cgame .title{left:104px;right:6px;font-size:5.8cqw;}
+  .cgame.pageHead .head{padding-top:14px;}
+}
+/* (2) VIDEO + CONCEPT PAGES: the title clears the 44 px corner buttons; the six chapter buttons wrap 3 x 2 under Play All so
+   every label is whole. */
+.vidTitle,.conceptTitle{padding:0 92px 0 60px;min-height:48px;display:flex;align-items:center;justify-content:center;font-size:16px;line-height:1.15;}
+#v_chapters{flex-wrap:wrap;gap:6px;}
+#v_chapters .vChapAll{flex:1 1 100%;min-height:44px;}
+#v_chapters .vChap{flex:1 1 30%;max-width:none;min-height:48px;}
+#v_chapters .vChapLb{font-size:12px;}
+/* (3) PLAY KIT (ky / km / pb). The kit's base rules were authored inside the 16:9 proportion pass, so upright it had no layout at
+   all. Upright it is WIDTH that is scarce: rows size from cqw - a model / build row of up to 8 stays ONE row, the pool wraps. */
+.kyTable{position:relative;width:98%;margin:0 auto;padding:0.4cqw 0 0.6cqw;}
+.kyRow{display:flex;gap:1.2cqw;justify-content:center;align-items:center;min-height:0;flex-wrap:nowrap;}
+.kyCard,.kySlot{flex:none;display:flex;align-items:center;justify-content:center;border-radius:2cqw;}
+.kyCard{background:#fff;border:0.7cqw solid var(--th);box-shadow:0 0.6cqw 1.2cqw rgba(30,10,0,.3);}
+.kyCard.shake{animation:shake .4s;}
+.kyPool .kyCard{cursor:pointer;}
+.kyPool .kyCard.used{opacity:.22;pointer-events:none;}
+#ky_app .kyRow:not(.kyPool) .kyCard,#ky_app .kySlot,#ky_app.kyBig .kyRow:not(.kyPool) .kyCard,#ky_app.kyBig .kySlot,#km_app .kyRow:not(.kyPool) .kyCard,#km_app .kySlot{width:9.8cqw;height:9.8cqw;}
+#ky_app .kyRow:not(.kyPool) .kyCard svg,#ky_app.kyBig .kyRow:not(.kyPool) .kyCard svg,#km_app .kyRow:not(.kyPool) .kyCard svg{width:7.4cqw;height:7.4cqw;max-height:100%;}
+#ky_app .kyRow:not(.kyPool) .kyCard img,#km_app .kyRow:not(.kyPool) .kyCard img{max-width:8cqw;max-height:8cqw;}
+#ky_app .kySlot .kyCard,#km_app .kySlot .kyCard{width:84%;height:84%;}
+#ky_app .kySlot .kyCard img,#km_app .kySlot .kyCard img{max-width:7cqw;max-height:7cqw;}
+#ky_app .kySlot .kyCard svg,#km_app .kySlot .kyCard svg{width:6.6cqw;height:6.6cqw;max-height:100%;}
+#ky_app .kyPool,#ky_app.kyBig .kyPool,#km_app .kyPool,#pb_app .kyPool,#pb_app.pbBig .kyPool{flex-wrap:wrap;width:auto;max-width:70cqw;gap:1.5cqw;padding:0;margin:0 auto;}
+#ky_app .kyPool .kyCard,#km_app .kyPool .kyCard{width:12.4cqw;height:12.4cqw;}
+#ky_app .kyPool .kyCard img,#km_app .kyPool .kyCard img{max-width:9.4cqw;max-height:9.4cqw;object-fit:contain;}
+#ky_app .kyPool .kyCard svg,#km_app .kyPool .kyCard svg{width:9.4cqw;height:9.4cqw;max-height:100%;}
+#ky_app .kyLbl,#km_app .kyLbl,#pb_app .kyLbl{font-size:3.4cqw;margin:0.8cqw 0 0.5cqw;text-align:center;}
+.kyKeyImg{height:7.4cqw;}
+#pb_app .pbStage,#pb_app.pbBig .pbStage{width:56cqw;max-width:56cqw;height:auto;max-height:26cqw;}
+#pb_app .pbStageWrap{gap:2cqw;}
+#pb_app .pbCheck{position:static;transform:none;flex:none;width:10cqw;height:10cqw;}
+#pb_app .pbTk{width:9cqw;height:7cqw;}
+#pb_app .pbTracker{margin:0 0 0.6cqw;gap:1.2cqw;}
+#pb_app .kyPool .kyCard.pbPiece,#pb_app.pbBig .kyPool .kyCard.pbPiece{width:12.4cqw;height:12cqw;padding:0.8cqw;}
+#pb_app .pbKeyLine{font-size:4cqw;max-width:90%;}
+#pb_app .pbSayShape{height:11cqw;}
+/* (4) 768-wide upright tablets: the four rule cards touched at the pulse peak; the ra boy's hair grazed the last numpad key */
+#t1_app .ruleGrid,#t1_app .ruleGrid.u5{column-gap:3.2cqw;}
+#ra_app .hero{height:14cqh;}
+#ra_app .raRow{transform:scale(.94);transform-origin:center bottom;}
+}
+/* ==== end TRAIN 2a PORTRAIT RULESET ==== */
 </style>
 </head>
 <body>
