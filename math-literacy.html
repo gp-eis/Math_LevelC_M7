@@ -1182,6 +1182,204 @@
   /* the 7-card ky pool fits one row by construction (max 1324px in a 1620px table) */
   #ky_app .kyPool{flex-wrap:nowrap;max-width:none;width:max-content;}
 /* ==== end PROPORTION-PASS C7 ==== */
+/* ==== TM2 FIT PASS (2026-09-21, William's five-check #3 - completability; director ruling 16:58): the PROPORTION-PASS
+   rule above sets min-height:9.5cqh on #t2_app pad keys, overriding tm2's own key-shortening (4.6cqh / .tall 4cqh) that
+   existed because Same Number's pad has two or three rows; the stack (groups + tray + sum + product + pad) then ran past the
+   panel at every viewport (measured 1280x720: pad bottom 704, 766 with the product row, vs panel 689; 844x390: 378 vs 370;
+   1024x768: 659 vs 647) and the centred, overflowing board pushed the group row up under the star row - a child could not
+   reach keys 7-12, so any round with n >= 4 was a dead end. Every rule below is #t2_app-scoped and cascade-LAST. ==== */
+  #t2_app .board{gap:1.3cqh;justify-content:flex-start;padding-top:0.5cqh;padding-bottom:2cqh;}
+  #t2_app .tm2Row .grp{width:26cqh;height:19cqh;}
+  #t2_app .addTray{gap:2.2cqh;}
+  #t2_app .addBtn{width:11cqh;height:11cqh;padding:0.8cqh;}
+  #t2_app .addBtn .plus{top:-1.2cqh;right:-1.2cqh;width:4.4cqh;height:4.4cqh;font-size:3cqh;}
+  #t2_app .miniBtn{padding:1.1cqh 3cqh;font-size:2.8cqh;}
+  #t2_app .eq{font-size:5cqh;gap:1.2cqh;margin-top:0;}
+  #t2_app .eq .nbox{width:8.5cqh;height:8.5cqh;font-size:4.6cqh;}
+  #t2_app .eq.raMul{font-size:4.4cqh;margin-top:0;}
+  #t2_app .eq.raMul .nbox{width:7.5cqh;height:7.5cqh;font-size:4cqh;}
+  #t2_app .numpad{gap:0.8cqh;width:min(100%,62cqh);}
+  #t2_app .numpad button{min-height:0;height:7cqh;font-size:4cqh;box-shadow:0 3px 0 #d8e0ea;}
+  #t2_app .numpad.tall button{height:5.6cqh;font-size:3.3cqh;}
+  /* a one-row pad (W3/W4 need-sets, <= 6 keys) has the room: keep the proportion pass's full-height keys there */
+  #t2_app .numpad:not(:has(button:nth-child(7))) button{height:9.5cqh;font-size:5.2cqh;box-shadow:0 4px 0 #d8e0ea;}
+/* ==== end TM2 FIT PASS ==== */
+
+  /* ==== THUMBNAIL / MARGIN FIX (9/15, William: "i menat the thumbnail" + "there are too
+     much margin so increase the size of the thumbnaiil" + "do the same with other videos
+     there"): the concept picker's tile grows height-bound to dominate the stage (bare
+     full-bleed thumb, aspect kept), title+padding slimmed; the hub's two video tiles
+     (Math Literature fairytaleThumb, videos-card art) gain headroom too. ==== */
+  .conceptShell{width:98vw;max-width:none;height:min(97vh,97dvh);padding:3.2vh 1vw 1vh;gap:0.4vh;}
+  .conceptTitle{font-size:clamp(18px,3.2vh,30px);}
+  .conceptPick{width:auto;max-width:96%;height:96%;max-height:none;aspect-ratio:16/9.9;}
+  .conceptPick .conceptThumbWrap{flex:1 1 0;min-height:0;width:100%;}
+  .conceptPick .conceptThumbWrap > img{width:100%;height:100%;object-fit:contain;display:block;border-radius:18px;}
+  .conceptPick span:not(.conceptThumbWrap){font-size:clamp(14px,2.2vh,20px);white-space:nowrap;
+    overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+  @media (max-height:520px){
+    /* 67% universal tile standard (William: "i like the 67% of the stage") - on short
+       screens the picker title folds (the hub card the child just tapped names this
+       screen; Home stays); the tile takes the reclaimed height. */
+    .conceptShell{padding:1.2vh 1vw 0.8vh;gap:0.2vh;}
+    .conceptTitle{display:none;}
+    .conceptPick{height:98%;}
+    .conceptPick span:not(.conceptThumbWrap){display:none;}
+  }
+  .hubCard[data-idx="4"] .hubCardArt{padding:2px 3px;}
+  .hubCard[data-idx="4"] .fairytaleThumb img{max-height:min(100%,46vh);}
+  .hubCard[data-idx="0"] .hubBtn.videoPlay img{max-height:min(100%,46vh);}
+  /* ==== RIDER (separately toggleable, William yes/no pending): the PLAYING video fills
+     the screen - shells grow, title folds while playing, players letterbox via
+     object-fit. Toggle = the VIDFILL const in the script (one line). ==== */
+  body.vidFill .vidShell{width:98vw;max-width:none;height:min(96vh,96dvh);padding:5vh 1vw 1.5vh;}
+  body.vidFill .vidShell.is-playing .vidTitle{display:none;}
+  body.vidFill .vidShell.is-playing{padding-top:2vh;}
+  body.vidFill .conceptShell.is-watching .conceptTitle{display:none;}
+  body.vidFill .conceptShell.is-watching{padding-top:2vh;}
+  body.vidFill #v_player,body.vidFill #c_player{width:100%!important;height:100%!important;
+    max-width:100%;max-height:100%;object-fit:contain;object-position:center;aspect-ratio:auto!important;}
+  /* ==== MATH-LIT CHAPTER PLAY BAR (9/15): jump between the six parts; code UI ==== */
+  #v_chapters{display:flex;gap:1vh;justify-content:center;align-items:stretch;width:100%;
+    padding:0.8vh 0 0.2vh;flex:none;z-index:8;}
+  #v_chapters[hidden]{display:none;}
+  .vChap{position:relative;overflow:hidden;flex:1 1 0;max-width:20vh;min-height:7.4vh;
+    border:0.45vh solid #f9a021;border-radius:2.2vh;background:#fff;cursor:pointer;
+    font-family:'Baloo';color:#7a4a1c;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:0.2vh;padding:0.6vh 0.9vh;
+    box-shadow:0 0.5vh 0 rgba(212,132,42,.25);transition:transform .12s ease;}
+  .vChap .vChapIc{font-size:2.7vh;line-height:1;z-index:2;pointer-events:none;}
+  .vChap .vChapLb{font-size:1.9vh;line-height:1.1;z-index:2;white-space:nowrap;pointer-events:none;}
+  .vChap .vChapFill{position:absolute;left:0;top:0;bottom:0;width:0;background:#ffe2b8;
+    z-index:1;transition:width .25s linear;pointer-events:none;}
+  .vChap.on{border-color:#e0424f;box-shadow:0 0.5vh 0 rgba(224,66,79,.3);transform:translateY(-0.3vh);}
+  .vChap:active,.vChap.is-pressing{transform:translateY(0.2vh);}
+  .vChapAll{position:relative;flex:0 0 auto;min-height:7.4vh;padding:0.6vh 1.6vh;
+    border:0.45vh solid #2e9e57;border-radius:2.2vh;background:#3fbf6a;color:#fff;cursor:pointer;
+    font-family:'Baloo';display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:0.2vh;box-shadow:0 0.5vh 0 rgba(30,120,60,.45);transition:transform .12s ease;}
+  .vChapAll .vChapIc{font-size:2.4vh;line-height:1;pointer-events:none;}
+  .vChapAll .vChapLb{font-size:1.9vh;line-height:1.1;white-space:nowrap;pointer-events:none;}
+  .vChapAll:active{transform:translateY(0.2vh);}
+  .vChap.ended::after{content:'\21BB';position:absolute;right:0.5vh;top:0.3vh;z-index:3;
+    font-size:2.2vh;color:#e0424f;font-family:'Baloo';}
+  .vChap.ended{border-color:#e0424f;}
+  /* ==== C PLAY KIT (9/15): A's shipped kit as the template - GP textbook ground,
+     tap-band cards, the book's red-dashed slot boxes, Pattern Blocks stage. ==== */
+  #ky_app,#km_app,#pb_app{background-color:#fefaf4;
+    background-image:linear-gradient(#eeece7 1px,transparent 1px),linear-gradient(90deg,#eeece7 1px,transparent 1px);
+    background-size:2.9cqh 2.9cqh;}
+  #ky_app .kyTable,#km_app .kyTable,#pb_app .kyTable{background:transparent;border:none;box-shadow:none;border-radius:0;}
+  #ky_app .kyLbl,#km_app .kyLbl,#pb_app .kyLbl{color:#28211c;text-shadow:none;font-size:2.5cqh;}
+  .kyKeyImg{display:block;height:6.4cqh;width:auto;max-width:96%;margin:0 auto;}
+  /* the book's red-dashed answer boxes (C-7 p24-26) as the slot look */
+  #ky_app .kySlot,#km_app .kySlot{border:0.4cqh dashed #e03030;background:#fff;border-radius:1.2cqh;}
+  #ky_app .kySlot .kyCard,#km_app .kySlot .kyCard{border-width:0;box-shadow:none;background:transparent;}
+  #ky_app .kyPool .kyCard,#km_app .kyPool .kyCard{width:15cqh;height:14cqh;}
+  #ky_app .kyPool{flex-wrap:nowrap;max-width:none;width:max-content;padding-left:1cqh;padding-right:1cqh;}
+  #ky_app.kyBig .kyPool{flex-wrap:wrap;width:auto;max-width:88cqh;justify-content:center;}
+  #ky_app.kyBig .kyRow:not(.kyPool) .kyCard,#ky_app.kyBig .kySlot{width:11.5cqh;height:10.6cqh;}
+  #ky_app.kyBig .kyRow:not(.kyPool) .kyCard svg{width:8cqh;height:8.6cqh;}
+  .kyGhost{position:fixed;z-index:99;pointer-events:none;transform:translate(-50%,-55%);opacity:.9;}
+  .kyCard.dragging{opacity:.35;}
+  /* Pattern Blocks */
+  #pb_app .pbTracker{display:flex;gap:1cqh;justify-content:center;align-items:center;margin:0.2cqh 0 0.4cqh;}
+  #pb_app .pbTk{width:8cqh;height:5.6cqh;border:0.3cqh solid #e8d9bd;border-radius:1cqh;background:#fff;
+    display:flex;align-items:center;justify-content:center;opacity:.55;padding:0.3cqh;}
+  #pb_app .pbTk svg{max-width:100%;max-height:100%;}
+  #pb_app .pbTk.cur{opacity:1;border-color:#f9a021;box-shadow:0 0 0.7cqh rgba(249,160,33,.5);}
+  #pb_app .pbTk.done{opacity:.9;border-color:#3caa50;}
+  #pb_app .pbStageWrap{position:relative;display:flex;align-items:center;justify-content:center;margin:0 auto;}
+  #pb_app .pbStage{height:24cqh;width:auto;max-width:70%;}
+  #pb_app .pbStage .pbSlot{fill:#fff;stroke:#e03030;stroke-width:2.5;stroke-dasharray:7 5;cursor:pointer;}
+  #pb_app .pbStage .pbSlot.filled{stroke:#222;stroke-dasharray:none;}
+  #pb_app .pbCheck{position:absolute;right:-7cqh;top:50%;transform:translateY(-50%);width:7.5cqh;height:7.5cqh;
+    border:0.25cqh solid #d8ccb4;border-radius:1cqh;background:#fff;display:flex;align-items:center;justify-content:center;padding:0.6cqh;}
+  #pb_app .pbCheck svg{max-width:100%;max-height:100%;}
+  #pb_app .kyPool{flex-wrap:nowrap;max-width:none;width:max-content;margin:0 auto;}
+  #pb_app.pbBig .kyPool{flex-wrap:wrap;width:auto;max-width:72cqh;justify-content:center;}
+  #pb_app.pbBig .pbStage{height:20cqh;}
+  #pb_app.pbBig .kyPool .kyCard.pbPiece{width:11cqh;height:10.5cqh;}
+  #pb_app .kyPool .kyCard.pbPiece{width:12.5cqh;height:12cqh;background:#fff;display:flex;align-items:center;justify-content:center;padding:0.5cqh;}
+  #pb_app .kyPool .kyCard.pbPiece svg{max-width:100%;max-height:100%;}
+  #pb_app .pbKeyLine{font-family:'Baloo';font-size:2.9cqh;color:#28211c;text-align:center;max-width:58%;margin:0 auto;}
+  #pb_app .pbSayShape{height:9cqh;width:auto;vertical-align:middle;margin-right:1cqh;}
+  /* ==== TEACHER VIDEO SIZE OPTION (9/15): Fill / Fit button on both video screens ==== */
+  .vidSizeBtn{position:absolute;right:1.2vh;top:1.2vh;z-index:26;height:5vh;padding:0 1.4vh 0 1vh;border:none;border-radius:14px;
+    background:#fff;box-shadow:0 3px 0 rgba(224,66,79,.35);cursor:pointer;display:flex;align-items:center;gap:0.8vh;
+    font-family:'Baloo';font-size:2.4vh;color:var(--red,#e0424f);}
+  .vidSizeBtn svg{width:2.8vh;height:2.8vh;stroke:var(--red,#e0424f);stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+  .vidSizeBtn:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(224,66,79,.3);}
+  .conceptShell .vidSizeBtn{right:0;top:0;}
+  /* ==== ITEM-6 LAYOUT FLAGS (9/16, William: "Fix them"): cascade-last, measured at 1280x720 ====
+     tm1 (Which Rule): the enlarged t1 option cards ran 18 px past the pad -> shapes 11->10cqh, card padding 2->1.5cqh, grid gap 2.6->2cqh.
+     ra (Repeated Addition): the numpad ran 11 px past the pad -> buttons 9.5->7.6cqh tall, digits 5.2->4.6cqh. */
+  #t1_app .ruleCard .runit .shp,#t1_app .ruleOpt .shp{width:10cqh;height:10cqh;}
+  #t1_app .ruleOpt .runit.lettered .shp{width:8.4cqh;height:8.4cqh;}   /* W2/W3 five-shape lettered cards: shape + letter stack */
+  #t1_app .ruleOpt{padding:1.1cqh 2.6cqh 0.8cqh;}
+  #t1_app .ruleGrid{gap:1.2cqh;}
+  #ra_app .numpad button{height:7.6cqh;min-height:0;line-height:1;padding:0;font-size:4.6cqh;}   /* height was the digit's line-height (66px), not min-height */
+
+  /* ==== KAKAO FIX 2026-09-20 (GP손부장님 via William): (a) the concept caption WRAPS instead of being
+     ellipsised - measured 747px of text in a 380px box at 412x915 - and is shown, smaller, on short screens
+     instead of hidden; (c) the week picker fits phone LANDSCAPE, where the cards used to run 114px below the
+     fold because they are sized from width. Cascade-last, layout only. ==== */
+  /* flex:none - the caption is a flex item in the tile; without it the box is shrunk below the
+     wrapped text and the second line spills out of its own box */
+  .conceptPick span:not(.conceptThumbWrap){white-space:normal;overflow:visible;text-overflow:clip;
+    max-width:100%;line-height:1.22;flex:0 0 auto;}
+  @media (max-height:520px){
+    .conceptPick span:not(.conceptThumbWrap){display:block;font-size:clamp(11px,2.5vh,15px);line-height:1.18;}
+  }
+  @media (max-height:560px) and (orientation:landscape){
+    /* the screen is the height budget: header shrinks, the row takes the rest and the cards size from it */
+    #weeks{justify-content:flex-start;gap:clamp(6px,1.2vh,12px);
+      padding:clamp(6px,1.4vh,14px) clamp(10px,2vw,24px) clamp(8px,1.6vh,16px);}
+    .weeksHeader{gap:4px;flex-direction:row;align-items:center;justify-content:center;flex-wrap:wrap;}
+    .weeksLogo{width:clamp(44px,9vh,64px);margin-bottom:0;}
+    .weeksLevel{font-size:clamp(12px,2.6vh,16px);padding:4px 14px;}
+    .weeksTitle{font-size:clamp(17px,4.4vh,26px);line-height:1;}
+    .siteHomeBtn{font-size:clamp(11px,2.4vh,15px);padding:.35em 1em;flex:none;}
+    /* nowrap/max-width also undo the narrow-screen 2x2 wrap, which on a SHORT landscape screen
+       (e.g. 667x375) stacks two rows of 140px-min cards and overflows just as badly */
+    .weeksRow{flex:1 1 auto;min-height:0;align-items:center;flex-wrap:nowrap;max-width:none;
+      padding:clamp(4px,1vh,10px) 4px clamp(6px,1.2vh,12px);gap:clamp(8px,1.6vw,18px);}
+    .weekBtn{flex:0 1 auto;width:auto;height:100%;max-width:none;max-height:100%;aspect-ratio:3/4;min-height:0;
+      padding:8px 8px 10px;border-radius:24px;gap:2px;}
+    .weekNum{font-size:clamp(18px,5vh,30px);}
+    .weekLabel{font-size:clamp(11px,2.6vh,16px);}
+  }
+/* ==== HUB ON A SIDEWAYS PHONE (William 2026-09-21: "when using on the phone, the menu buttons on the menu hub get squished
+   and lose their proper ratio"). Measured 844x390: the centre card was 460x242 (aspect 1.9; desktop 1.03) and it covered the
+   week title and overlapped All Weeks, because `.hubCard{width:min(460px,70vw);height:min(62vh,540px);aspect-ratio:1/1.05}`
+   fixes BOTH dimensions (so aspect-ratio never applies) and the hub column only had a min-height. In short landscape ONLY:
+   the hub gets a definite height, the header and the dots/All-Weeks footer fold into single rows (as the 9/20 week-picker fix
+   did), and the card takes the stage's height with the DESKTOP shape (460/446). Above 560 px of height nothing here applies. ==== */
+@media (max-height:560px) and (orientation:landscape){
+  #hub{height:100vh;height:100dvh;min-height:0;}
+  #hub .hubHeader{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:center;gap:0 12px;}
+  #hub .hubLogo{width:clamp(44px,12vh,60px);margin-bottom:0;}
+  #hub .hubWeekTitle{font-size:clamp(20px,6.4vh,28px);line-height:1.05;}
+  #hub .hubWeekSub{flex-basis:100%;text-align:center;font-size:clamp(12px,3.6vh,16px);margin-top:0;line-height:1.1;}
+  #hub .hubStage{min-height:0;}
+  #hub .hubTrack{min-height:0;height:100%;}
+  #hub .hubCard{height:100%;max-height:100%;width:auto;min-width:0;aspect-ratio:460/446;}
+  #hub .hubNav{flex-direction:row;gap:18px;margin-top:10px;padding-bottom:0;}   /* 10px: the card's 3-D lip must not touch All Weeks */
+  #hub .hubAllWeeks{padding:8px 20px;min-height:44px;}
+}
+/* ==== end HUB ON A SIDEWAYS PHONE ==== */
+/* ==== DEAD MENU TILE (2026-09-22): a menu with two options showed a third, dead "Activity 3" tile - the hidden attribute was
+   defeated by .actPickBtn{display:flex}. A7 has had this rule since the third tile was introduced; B7/C7 never got it. ==== */
+.actPickBtn[hidden]{display:none!important;}
+/* ==== TM1 RULE CARD FIT (2026-09-22): the widest W1 rule spilled its card (last triangle chopped on phones/tablets), the cards
+   touched at the pulse peak, and the W2/W3 five-shape cards pushed the picture strip over the progress stars. ==== */
+#t1_app .ruleGrid{width:min(100%,96cqh);gap:1.2cqh 2.8cqh;}
+#t1_app .ruleOpt{padding:1.1cqh 1.2cqh 0.8cqh;}
+#t1_app .ruleOpt .runit .shp{width:8.4cqh;height:8.4cqh;}
+#t1_app .ruleGrid.u5{gap:1.4cqh 2.8cqh;}
+#t1_app .ruleGrid.u5 .ruleOpt{padding:0.8cqh 1.2cqh 0.6cqh;}
+#t1_app .ruleGrid.u5 .ruleOpt .runit.lettered .shp{width:7cqh;height:7cqh;}
+#t1_app .ruleGrid.u5 .ruleOpt .runit.lettered .rl{font-size:3.2cqh;}
 </style>
 </head>
 <body>
@@ -1273,6 +1471,14 @@
         </div>
         <div class="hubActions"></div>
       </article>
+      <!-- PLAY KIT (W4 교구): the LAST hub card, Week-4 only - C shape world -->
+      <article class="hubCard" data-idx="5" data-week="4">
+        <div class="hubCardTitle">Play Kit</div>
+        <button type="button" class="hubCardArt" data-launch="actPick" data-act="kit" aria-label="Open Play Kit">
+          <img src="assets/hub_play_kit.png?v=1" alt="Play Kit">
+        </button>
+        <div class="hubActions"></div>
+      </article>
     </div>
     <button class="hubArrow" id="hubNext" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
   </div>
@@ -1289,6 +1495,7 @@
 <div class="game g-video" id="screen-video">
   <div class="vidShell">
     <button id="v_homeBtn" title="Back"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+    <button type="button" class="vidSizeBtn" aria-label="Video size"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg><span class="lbl">Fill</span></button>
     <div class="vidTitle" id="v_title">Video</div>
     <div class="vidStage">
       <video id="v_player" playsinline preload="metadata"></video>
@@ -1297,6 +1504,7 @@
       </button>
       <div id="v_missing">Video coming soon — add the file to the assets folder.</div>
     </div>
+    <div id="v_chapters" hidden></div>
     <button type="button" id="v_playPause" class="vidToggle" aria-label="Play or pause video">
       <svg class="ic ic-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
       <svg class="ic ic-pause" viewBox="0 0 24 24"><path d="M7 5h3.4v14H7z M13.6 5H17v14h-3.4z"/></svg>
@@ -1318,6 +1526,10 @@
         <span class="playIcon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6.8v10.4L18 12 9 6.8z"/></svg></span>
         <span class="actPickLabel">Activity 2</span>
       </button>
+      <button type="button" class="actPickBtn" id="ap_btn3" data-slot="3" aria-label="Activity 3" hidden>
+        <span class="playIcon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6.8v10.4L18 12 9 6.8z"/></svg></span>
+        <span class="actPickLabel">Activity 3</span>
+      </button>
     </div>
   </div>
 </div>
@@ -1326,6 +1538,7 @@
   <div class="conceptShell">
     <button id="c_homeBtn" title="Menu"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
     <button id="c_backBtn" title="Back"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+    <button type="button" class="vidSizeBtn" aria-label="Video size"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg><span class="lbl">Fill</span></button>
     <div class="conceptTitle">Math Literacy Videos</div>
     <div class="conceptStage" id="c_stage">
       <button type="button" class="conceptPick" data-act="concept-patterns" aria-label="We Are at the Park">
@@ -1484,8 +1697,8 @@
     <div class="title">My Own Rule</div>
     <div class="head">
       <div class="ribbon">Make Your Own</div>
-      <div class="bq"><div class="pre">Invent your <b>own rule</b>!</div><div class="ask">Fill all five places so your rule <b>repeats</b>.</div></div>
-      <div class="kyKey">&ldquo;Let&rsquo;s use all of the <b>pattern rules</b>.&rdquo;</div>
+      <div class="bq"><div class="pre">Invent your <b>own rule</b>!</div><div class="ask">Fill all six places so your rule <b>repeats all the way</b>.</div></div>
+      <div class="kyKey"><img class="kyKeyImg" src="assets/kyogu/sentence_rules.png?v=1" alt="Let's use all of the pattern rules."></div>
     </div>
     <div class="bstars" id="km_stars"></div>
     <div class="board">
@@ -1522,13 +1735,57 @@
   </div></div>
 </div></div>
 
+<div class="game" id="screen-pb"><div id="pb_app" class="cgame orange">
+  <div class="panel"><div class="pad">
+    <div class="title" id="pb_title">Pattern Blocks</div>
+    <div class="head">
+      <div class="ribbon" id="pb_ribbon">Build with Blocks</div>
+      <div class="bq"><div class="pre" id="pb_pre">Make the shape!</div><div class="ask" id="pb_ask">Drag the blocks into the outline.</div></div>
+      <div class="kyKey"><img class="kyKeyImg" src="assets/kyogu/sentence_rules.png?v=1" alt="Let's use all of the pattern rules."></div>
+    </div>
+    <div class="bstars" id="pb_stars"></div>
+    <div class="board">
+      <div class="kyTable">
+        <div class="pbTracker" id="pb_tracker"></div>
+        <div class="pbStageWrap"><svg class="pbStage" id="pb_stage" viewBox="0 0 420 220" aria-label="shape outline"></svg><div class="pbCheck" id="pb_check"></div></div>
+        <div class="pbKeyLine" id="pb_key"></div>
+        <div class="kyLbl" id="pb_poolLbl">Drag the blocks!</div>
+        <div class="kyRow kyPool" id="pb_pool"></div>
+      </div>
+    </div>
+    <div class="shadow L"></div><div class="shadow R"></div>
+    <img id="pb_heroLImg" class="hero L" src="assets/c7/hero_girl_idle.png?v=4" alt="">
+    <img id="pb_heroRImg" class="hero R" src="assets/c7/hero_boy_idle.png?v=2" alt="">
+    <video id="pb_heroLVid" class="hero L" src="assets/c7/hero_girl_cheer.webm?v=4" muted playsinline preload="none"></video>
+    <video id="pb_heroRVid" class="hero R" src="assets/c7/hero_boy_cheer.webm?v=3" muted playsinline preload="none"></video>
+    <div id="pb_sentence" class="sentence"></div>
+    <button id="pb_homeBtn" class="homeBtn" title="Home" aria-label="Home"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
+    <button id="pb_backBtn" class="backBtn" title="Back" aria-label="Previous page"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+    <div id="pb_intro" class="intro">
+      <div class="introCard">
+        <div class="introBubble" id="pb_introText"></div>
+        <div class="introChar" id="pb_introChar">
+          <img id="pb_introImg" src="assets/c7/boy_idle.png" alt="">
+          <video id="pb_introVid" playsinline preload="none"></video>
+        </div>
+        <div class="introHint">Tap to continue</div>
+      </div>
+    </div>
+    <div id="pb_end" class="end">
+      <video id="pb_fw" class="fw" src="assets/fireworks_end_alpha.webm" muted playsinline preload="none"></video>
+      <h1>You did it!</h1><div id="pb_endStars" class="endStars"></div>
+      <div class="endBtns"><button id="pb_againBtn" class="btn">Play again</button><button id="pb_endHomeBtn" class="btn home">Home</button></div>
+    </div>
+  </div></div>
+</div></div>
+
 <div class="game" id="screen-ky"><div id="ky_app" class="cgame green">
   <div class="panel"><div class="pad">
-    <div class="title">Shape Cards</div>
+    <div class="title">Pattern Cards</div>
     <div class="head">
       <div class="ribbon">Copy the Rule</div>
       <div class="bq"><div class="pre">Look at the <b>rule</b>.</div><div class="ask">Build the <b>same rule</b> with your cards. Some cards do <b>not</b> belong!</div></div>
-      <div class="kyKey">&ldquo;Let&rsquo;s use all of the <b>pattern rules</b>.&rdquo;</div>
+      <div class="kyKey"><img class="kyKeyImg" src="assets/kyogu/sentence_rules.png?v=1" alt="Let's use all of the pattern rules."></div>
     </div>
     <div class="bstars" id="ky_stars"></div>
     <div class="board">
@@ -1612,6 +1869,20 @@
 </div></div>
 
 <script>
+// RIDER toggle (William yes/no pending): true = the playing video fills the screen.
+// The thumbnail/margin fix above in CSS is UNCONDITIONAL; only the player behavior rides here.
+(function(){   // teacher-facing video SIZE option: Fill (default) / Fit, remembered per device
+  var pref=null; try{ pref=localStorage.getItem('gpVidSize'); }catch(e){}
+  var fill = pref ? pref==='fill' : true;
+  document.body.classList.toggle('vidFill', fill);
+  window.gpVidSize={
+    set:function(f){ fill=!!f; document.body.classList.toggle('vidFill', fill); try{ localStorage.setItem('gpVidSize', fill?'fill':'fit'); }catch(e){} this.paint(); },
+    toggle:function(){ this.set(!fill); },
+    paint:function(){ document.querySelectorAll('.vidSizeBtn').forEach(function(b){ b.classList.toggle('is-fill', fill); b.setAttribute('aria-label', fill?'Video size: Fill. Tap for Fit':'Video size: Fit. Tap for Fill'); b.querySelector('.lbl').textContent=fill?'Fill':'Fit'; }); }
+  };
+  document.addEventListener('DOMContentLoaded', function(){ window.gpVidSize.paint();
+    document.querySelectorAll('.vidSizeBtn').forEach(function(b){ b.addEventListener('click', function(){ window.gpVidSize.toggle(); }); }); });
+})();
 /* ================= shared helpers ================= */
 function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 /* shapes: C = blue circle, T = orange triangle (the book colours) */
@@ -1735,6 +2006,8 @@ const NUM_WORDS=['zero','one','two','three','four','five','six','seven','eight',
 
 /* ================= shared game kit (audio, stars, heroes, talk-first intro, celebration, end) ================= */
 function makeCKit(pfx){
+  // shake feedback (makeBKit parity; the old C ky called this and silently threw)
+  var _K_shake=function(el){ el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); setTimeout(function(){ el.classList.remove('shake'); },450); };
   const $=id=>document.getElementById(pfx+'_'+id);
   const STAR='M12 2l3 6.3 6.9.9-5 4.8 1.2 6.9L12 18.6 5.9 21l1.2-6.9-5-4.8 6.9-.9z';
   const K={ $, STAR, runSeq:0, SFX:{}, sayNode:null, cheerNode:null, fwSound:null, timers:[] };
@@ -1759,8 +2032,27 @@ function makeCKit(pfx){
   K.say=function(name,cb,est){ const seq=K.runSeq; K.sayNode=K.stopSound(K.sayNode); try{speechSynthesis.cancel();}catch(e){} K.sayNode=K.play(name);
     let done=false; const fin=()=>{ if(done||seq!==K.runSeq) return; done=true; cb&&cb(); };
     if(K.sayNode){ K.sayNode.addEventListener('ended',()=>K.later(fin,250),{once:true});
-      const d=K.sayNode.duration; K.later(fin,(typeof d==='number'&&isFinite(d)&&d>0.5)?(d*1000+900):(est||7000)); }
+      const n=K.sayNode; let g=null;
+      // backstop only (the 'ended' listener above is the real finish): sized to what is LEFT to play and re-armed as the
+      // clip loads and plays, so a line whose duration was not yet known is never cut mid-sentence
+      const arm=()=>{ if(done) return; if(g!=null) clearTimeout(g); const d=n.duration, t=n.currentTime||0;
+        g=K.later(fin,(typeof d==='number'&&isFinite(d)&&d>0.5)?(Math.max(0,d-t)*1000+1500):Math.max(est||0,12000)); };
+      n.addEventListener('loadedmetadata',arm); n.addEventListener('durationchange',arm); n.addEventListener('timeupdate',arm); arm(); }
     else K.later(fin,est||4500);
+    return K.sayNode; };
+
+  // THE QUESTION IS ALWAYS HEARD (William 09-16). K.ask reads it; until it has ended, taps on the board are swallowed
+  // (navigation excepted) so no answer can cut it off. Every game unlocks in K.ask's callback.
+  K.asking=false;
+  (function(){ const root=document.getElementById(pfx+'_app'); if(!root) return;
+    const NAV='[id$=_homeBtn],[id$=_backBtn],[id$=_againBtn],[id$=_endHomeBtn],.homeBtn,.backBtn,.vidSizeBtn,.intro,#k_nextBtn';
+    const swallow=e=>{ if(!K.asking) return; const t=e.target; if(t&&t.closest&&t.closest(NAV)) return;
+      e.stopPropagation(); e.preventDefault(); };
+    ['pointerdown','click'].forEach(tp=>root.addEventListener(tp, swallow, true)); })();
+  K.ask=function(name,cb,est){ const seq=K.runSeq; K.asking=true;
+    let done=false; const fin=()=>{ if(done) return; done=true; if(seq!==K.runSeq) return; K.asking=false; cb&&cb(); };
+    K.say(name, fin, est);
+    K.later(fin, (est||6000)+9000);   // last-resort release if neither 'ended' nor K.say's own guard ever fires
     return K.sayNode; };
   K.buildStars=function(n){ $('stars').innerHTML=Array.from({length:n},()=>'<svg class="st" viewBox="0 0 24 24"><path d="'+STAR+'"/></svg>').join(''); };
   K.litStars=function(n){ [...$('stars').children].forEach((s,i)=>s.classList.toggle('on',i<n)); };
@@ -1864,12 +2156,14 @@ function makeCKit(pfx){
     introVid.style.opacity='0'; introImg.style.opacity='1';
     if(o.still) introImg.src=o.still;
     let finished=false, decided=false;
-    const finish=()=>{ if(finished||seq!==K.runSeq) return; finished=true; introDone=null;
+    const finish=(why)=>{ if(finished||seq!==K.runSeq) return; finished=true; introDone=null;
+      const reask = why==='tap' && o.question && o.voice;   // the presenter WAS the question: read it again
       intro.classList.remove('on'); introChar.classList.remove('talking');
-      try{ introVid.pause(); introVid.onended=null; introVid.removeAttribute('src'); introVid.load(); }catch(e){}
-      K.sayNode=K.stopSound(K.sayNode); try{speechSynthesis.cancel();}catch(e){} onDone&&onDone(); };
+      try{ introVid.pause(); introVid.onended=null; introVid.ontimeupdate=null; introVid.removeAttribute('src'); introVid.load(); }catch(e){}
+      K.sayNode=K.stopSound(K.sayNode); try{speechSynthesis.cancel();}catch(e){}
+      if(reask) K.ask(o.voice, onDone, o.est); else onDone&&onDone(); };
     introDone=finish;
-    const startVoice=()=>{ K.later(()=>{ if(seq===K.runSeq) K.say(o.voice,()=>K.later(finish,350),o.est||6000); },300); };
+    const startVoice=()=>{ if(finished) return; K.later(()=>{ if(seq===K.runSeq && !finished) K.say(o.voice,()=>K.later(finish,350),o.est||6000); },300); };
     if(o.video){
       try{ introVid.muted=false; introVid.src=o.video; introVid.load(); }catch(e){}
       introVid.oncanplay=()=>{ if(seq!==K.runSeq||decided) return; decided=true;
@@ -1877,11 +2171,15 @@ function makeCKit(pfx){
         introVid.onended=()=>{ if(seq===K.runSeq) K.later(finish,300); };
         const p=introVid.play();
         if(p&&p.catch) p.catch(()=>{ try{ introVid.muted=true; introVid.play().catch(()=>{}); }catch(e){} startVoice(); });
-        const d=introVid.duration; K.later(finish,(isFinite(d)&&d>0?d*1000:10000)+1500); };
+        // backstop sized to what is LEFT to play, re-armed as it plays: a clip decoding slower than real time is not cut
+        let vg=null; const varm=()=>{ if(finished||seq!==K.runSeq) return; if(vg!=null) clearTimeout(vg);
+          const d=introVid.duration, t=introVid.currentTime||0;
+          vg=K.later(finish,(isFinite(d)&&d>0)?(Math.max(0,d-t)*1000+3000):20000); };
+        introVid.ontimeupdate=varm; varm(); };
       introVid.onerror=()=>{ if(seq!==K.runSeq||decided) return; decided=true; startVoice(); };
       K.later(()=>{ if(seq!==K.runSeq||decided) return; decided=true; introVid.oncanplay=null; startVoice(); },1800);
     } else { decided=true; startVoice(); } };
-  intro.addEventListener('click',()=>{ if(introDone) introDone(); });
+  intro.addEventListener('click',()=>{ if(introDone) introDone('tap'); });
   K.hideIntro=function(){ introDone=null; intro.classList.remove('on'); introChar.classList.remove('talking');
     try{ introVid.pause(); introVid.removeAttribute('src'); introVid.load(); }catch(e){} };
   /* fireworks + end */
@@ -1897,7 +2195,7 @@ function makeCKit(pfx){
     const s=K.SFX.cheer; if(s&&s.ok()){ try{ const n=s.a.cloneNode(true); n.volume=0; n.play().catch(()=>{}); const t0=performance.now(),target=s.a.volume;
       (function ramp(){const k=Math.min(1,(performance.now()-t0)/1400); n.volume=target*k; if(k<1) requestAnimationFrame(ramp);})(); K.cheerNode=n; }catch(e){} }
     K.playEndFireworks(); };
-  K.stopAll=function(){ K.runSeq++; K.clearTimers(); K.sayNode=K.stopSound(K.sayNode); K.cheerNode=K.stopSound(K.cheerNode); K.fanfareNode=K.stopSound(K.fanfareNode);
+  K.stopAll=function(){ K.runSeq++; K.asking=false; K.clearTimers(); K.sayNode=K.stopSound(K.sayNode); K.cheerNode=K.stopSound(K.cheerNode); K.fanfareNode=K.stopSound(K.fanfareNode);
     K.stopEndFireworks(); try{speechSynthesis.cancel();}catch(e){} K.hideSentence(); K.resetHeroes(); K.hideIntro(); K.hideNext(); $('end').style.display='none'; };
   K.celebrate=function(voiceKey,praise,html,onDone,icons){ const seq=K.runSeq;
     K.showSentence(praise,html,icons); K.sayNode=K.stopSound(K.sayNode); K.sayNode=K.play(voiceKey);
@@ -1918,6 +2216,7 @@ function makeCKit(pfx){
     $('homeBtn').addEventListener('click',e=>pressThen(e.currentTarget,()=>{ game.stop(); App.home(); }));
     const bb=$('backBtn'); if(bb) bb.addEventListener('click',e=>pressThen(e.currentTarget,()=>{ game.stop(); App.back(); }));
   };
+  K.shakeEl=function(el){ K.play('wrong'); _K_shake(el); };
   return K;
 }
 
@@ -2001,7 +2300,9 @@ const ACTS_W4={
        intro:{voice:'w4_cp_a1_intro', video:'assets/c7w4/talk_cp_a1.webm?v=5', still:'assets/c7w4/talk_cp_a1_idle.png?v=5',
               text:'Use all the rules<br>to complete each pattern!', est:5000},
        question:'w4_cp_a1_question',  /* after the presenter intro, a separate VO reads the on-screen question */
-       rounds:[ {rule:1, strip:'TSC____'},
+       /* PATTERN LAW (teacher, 2026-09-21): a strip's box count is a MULTIPLE OF THE UNIT - complete repeats only.
+          Rule 1 is a 3-shape unit (TSC), so its strip is 6 boxes; it was 'TSC____' = 7, the photographed defect. */
+       rounds:[ {rule:1, strip:'TSC___'},
                 {rule:2, strip:'TTTS____'},
                 {rule:3, strip:'CCST____'},
                 {rule:4, strip:'RRSTC_____'} ]},
@@ -2304,10 +2605,11 @@ function renderRound(){
 }
 function sayRoundRule(){
   const r=ACTS[act].rounds[roundIdx], seq=K.runSeq;
-  if(applyMode) K.later(()=>{ if(seq===K.runSeq) K.say(vk('cp_apply_intro'),null,5000); },250);
-  else if(traceMode) K.later(()=>{ if(seq===K.runSeq) K.say(vk('cp_trace_'+r.rule),null,6000); },250);
-  else if(!freeMode) K.later(()=>{ if(seq===K.runSeq) K.say(vk('cp_rule_'+r.rule),null,5200); },250);
-  else K.later(()=>{ if(seq===K.runSeq) K.say(vk('cp_free_intro'),null,6000); },250);
+  K.asking=true;   // the round's instruction is a question: hold answers from now until it has been heard
+  if(applyMode) K.later(()=>{ if(seq===K.runSeq) K.ask(vk('cp_apply_intro'),null,5000); },250);
+  else if(traceMode) K.later(()=>{ if(seq===K.runSeq) K.ask(vk('cp_trace_'+r.rule),null,6000); },250);
+  else if(!freeMode) K.later(()=>{ if(seq===K.runSeq) K.ask(vk('cp_rule_'+r.rule),null,5200); },250);
+  else K.later(()=>{ if(seq===K.runSeq) K.ask(vk('cp_free_intro'),null,6000); },250);
 }
 function tapShape(btn){
   if(locked) return; K.play('tap');
@@ -2345,10 +2647,13 @@ function finishRound(){
   },550);
 }
 function advance(){ roundIdx++; if(roundIdx<ACTS[act].rounds.length){ locked=false; renderRound(); sayRoundRule(); } else K.endGame(ACTS[act].rounds.length,score); }
-/* free mode: find the repeating unit (period 2..4, at least two full repeats) */
+/* free mode: find the repeating unit (period 2..5, at least two full repeats).
+   PATTERN LAW (teacher, 2026-09-21): only COMPLETE repeats count - the period must divide the box count.
+   Without `n % p` a child's ABCABCAB in 8 boxes passed as rule "ABC" and was praised while ending mid-unit.
+   Every free round stays solvable: len 6 -> units 2|3, len 8 -> 2|4, len 10 -> 2|5 (3-shape weeks use 4 or 5). */
 function findUnit(arr){
   const n=arr.length;
-  for(let p=2;p<=5;p++){ if(n<2*p) continue;
+  for(let p=2;p<=5;p++){ if(n<2*p || n%p!==0) continue;
     let ok=true; for(let i=0;i<n;i++){ if(arr[i]!==arr[i%p]){ ok=false; break; } }
     if(ok) return arr.slice(0,p).join('');
   }
@@ -2394,7 +2699,7 @@ function start(a){ K.stopAll();
   K.buildStars(ACTS[act].rounds.length); K.litStars(0); K.preloadHeroes(); renderRound();
   K.intro(ACTS[act].intro,()=>{ locked=false;
     const _q=ACTS[act].question;   /* presenter presented the problem; now a separate VO reads the on-screen question */
-    if(_q) K.say(_q,()=>{ if(K.runSeq) sayRoundRule(); },3500); else sayRoundRule(); }); }
+    if(_q) K.ask(_q,()=>sayRoundRule(),3500); else sayRoundRule(); }); }
 window.CreateGame={ _lastAct:'a1', start(a){ if(a) this._lastAct=a; start(a||this._lastAct); }, stop(){ K.stopAll(); locked=true; } };
 K.wireNav(window.CreateGame);
 App.engines.cp=window.CreateGame;
@@ -2570,7 +2875,7 @@ function tapNum(btn){
     if(step===curAdd){ setBoxes(); $('qAsk').innerHTML='How many <b>altogether</b>?'; return; }
     if(MUL){ setBoxes(); $('qPre').innerHTML='<b>'+curAdd+'</b> groups of <b>'+r.n+'</b>.';
              /* was hard-coded to w2_ra_mul, so Week 3 said "THREE groups" over a four-group page */
-             $('qAsk').innerHTML='Now <b>multiply</b>!'; K.say(vk('ra_mul'),null,4200); return; }
+             $('qAsk').innerHTML='Now <b>multiply</b>!'; K.ask(vk('ra_mul'),null,4200); return; }
     finishRound(r); return;
   }
   if(n!==curAdd*r.n){ K.wrongOn(btn); return; }
@@ -2612,8 +2917,8 @@ function start(a){ K.stopAll();
   $('app').classList.toggle('pageHead', !!_pg);
   K.setHeroes(ACTS[act].heroL,ACTS[act].heroR);
   K.buildStars(ACTS[act].rounds.length); K.litStars(0); K.preloadHeroes(); renderRound();
-  K.intro(ACTS[act].intro,()=>{ locked=false;
-    const _q=ACTS[act].question; if(_q) K.say(_q,null,3500);   /* presenter presented; separate VO reads the question */
+  K.intro(Object.assign({question:!ACTS[act].question}, ACTS[act].intro),()=>{ locked=false;
+    const _q=ACTS[act].question; if(_q) K.ask(_q,null,3500);   /* presenter presented; separate VO reads the question */
   }); }
 window.AddGame={ _lastAct:'a1', start(a){ if(a) this._lastAct=a; start(a||this._lastAct); }, stop(){ K.stopAll(); locked=true; } };
 K.wireNav(window.AddGame);
@@ -2709,7 +3014,7 @@ function start(){ K.stopAll();
   ROUNDS=shuffle((w3?BANK_W3:w2?BANK_W2:BANK_W1).slice()); roundIdx=0; score=0; locked=true;
   K.setHeroes('assets/c7/girl_idle.png','assets/c7/boy_idle.png');
   K.buildStars(ROUNDS.length); K.litStars(0); K.preloadHeroes(); renderRound();
-  K.intro({voice:vk('t1_intro'),
+  K.intro({question:true, voice:vk('t1_intro'),
     video:(w3?'assets/c7w3/talk_tm1.webm?v=3':w2?'assets/c7w2/talk_tm1.webm?v=2':'assets/c7/talk_tm1.webm?v=2'),
     still:(w3?'assets/c7w3/talk_tm1_idle.png?v=3':w2?'assets/c7w2/talk_tm1_idle.png?v=2':'assets/c7/talk_tm1_idle.png?v=1'),
     text:(w3?'Look at the <b>yard</b>.<br>Which <b>rule</b> does it follow?'
@@ -2852,7 +3157,7 @@ function tapNum(btn){
       mulEl.innerHTML='<span class="nbox filled">'+r.n+'</span><span>&times;</span><span class="nbox filled">'+(MINE+1)+'</span><span>=</span><span class="nbox mulAns next">?</span>';
       $('qPre').innerHTML='<b>'+(MINE+1)+'</b> groups of <b>'+r.n+'</b>.';
       $('qAsk').innerHTML='Now <b>multiply</b>!';
-      K.say(vk('t2_mul'),null,4200); return;
+      K.ask(vk('t2_mul'),null,4200); return;
     }
     finishRound(r); return;
   }
@@ -2890,14 +3195,14 @@ function start(){ K.stopAll();
   buildPad();
   K.setHeroes('assets/c7/boy_idle.png','assets/c7/girl_idle.png');
   K.buildStars(ROUNDS.length); K.litStars(0); K.preloadHeroes(); renderRound();
-  K.intro({voice:vk('t2_intro'),
+  K.intro({question:!w4, voice:vk('t2_intro'),
     video:(w4?'assets/c7w4/talk_tm2.webm?v=6':w3?'assets/c7w3/talk_tm2.webm?v=3':w2?'assets/c7w2/talk_tm2.webm?v=2':'assets/c7/talk_tm2.webm?v=2'),
     still:(w4?'assets/c7w4/talk_tm2_idle.png?v=6':w3?'assets/c7w3/talk_tm2_idle.png?v=3':w2?'assets/c7w2/talk_tm2_idle.png?v=2':'assets/c7/talk_tm2_idle.png?v=1'),
     text:(w4?'Four equal groups is the<br>same as <b>multiplying</b>!'
           :w3?'Make <b>four</b> groups with the<br><b>same</b> number. Then add!'
           :w2?'Make the <b>same</b> number<br><b>three</b> times. Then add!'
              :'Make the <b>same</b> number.<br>Then add them!'), est:(w4?5500:9500)},()=>{ locked=false;
-    if(w4) K.say('w4_t2_question',null,3500);   /* presenter presented the idea; separate VO reads the task */
+    if(w4) K.ask('w4_t2_question',null,3500);   /* presenter presented the idea; separate VO reads the task */
   }); }
 window.SameNumGame={ _lastAct:null, start(){ start(); }, stop(){ K.stopAll(); locked=true; } };
 K.wireNav(window.SameNumGame);
@@ -2907,6 +3212,8 @@ App.engines.tm2=window.SameNumGame;
 /* ---- W4 교구: COPY THE RULE (shape-card replication from a MIXED pool - approved v2) ---- */
 (function(){
 const K=makeCKit('ky'), $=K.$;
+// TEXTBOOK-CANONICAL rounds (C-7 W4 p24 'Complete the patterns', the book's own rows in
+// the book's own colours) that CLOSE their period (William 9/15). PICTURES ONLY.
 const SVG={
   sq:'<rect x="15" y="15" width="70" height="70" rx="6" fill="#d63b3b"/>',
   circle:'<circle cx="50" cy="50" r="38" fill="#2f7fd0"/>',
@@ -2915,57 +3222,192 @@ const SVG={
 const NAME={sq:'square', circle:'circle', tri:'triangle', star:'star'};
 function shp(id){ return '<svg viewBox="0 0 100 100" style="width:9.4cqh;height:10.4cqh;">'+SVG[id]+'</svg>'; }
 const ROUNDS=[
-  {model:['sq','circle','sq','circle','sq'],   extra:['tri','n4','star','n6'],  rule:'AB'},
-  {model:['sq','circle','star','sq','circle'], extra:['tri','n2','star','n8'],  rule:'ABC'},
-  {model:['tri','tri','circle','circle','tri'],extra:['sq','n3','star','n9'],   rule:'AABB'}];
+  {model:['tri','sq','circle','tri','sq','circle'], extra:['star','star'], rule:'ABC'},
+  {model:['tri','tri','tri','sq','tri','tri','tri','sq'], extra:['circle','star'], rule:'AAAB'},
+  {model:['circle','circle','sq','tri','circle','circle','sq','tri'], extra:['star','star'], rule:'AABC'}];
 const PR=['Great job!','Excellent!','Amazing!'];
 K.reg('ky_intro','assets/voice/ky_intro.mp3',
-  'Look at the rule on the table. Now you build the same one below! Pick the right shape cards. Some cards do not belong!');
+  'Look at the rule. Now you build the same one below! Drag the right shape cards into the boxes. Some cards do not belong!');
 ROUNDS.forEach(function(r,i){ K.reg('ky_done_'+i,'assets/voice/ky_done_'+i+'.mp3',
-  'You copied the whole rule. It is an '+r.rule+' pattern!'); });
-let roundIdx=0, fill=0, score=0, locked=true;
+  'You copied the whole rule. It is an '+r.rule.split('').join(' ')+' pattern!'); });
+let roundIdx=0, score=0, locked=true, placed=[];
 const model=$('model'), row=$('row'), pool=$('pool');
-function cardHTML(id){
-  if(id.charAt(0)==='n') return '<div class="kyCard" data-id="'+id+'"><span class="kyNum">'+id.slice(1)+'</span></div>';
-  return '<div class="kyCard" data-id="'+id+'">'+shp(id)+'</div>'; }
+function cardHTML(id){ return '<div class="kyCard" data-id="'+id+'">'+shp(id)+'</div>'; }
 function sentenceHTML(r){ return r.model.map(function(id){
   return '<svg class="shp" viewBox="0 0 100 100">'+SVG[id]+'</svg>'; }).join('')
-  +' — you built the '+r.rule+' rule!'; }
+  +' — an <b>'+r.rule+'</b> rule!'; }
 function renderRound(){
-  const r=ROUNDS[roundIdx]; locked=true; fill=0;
+  const r=ROUNDS[roundIdx]; locked=true; placed=r.model.map(function(){ return false; });
+  document.getElementById('ky_app').classList.toggle('kyBig', r.model.length+2>7);   // pool >7 cards wraps to two rows (hero corridor)
   model.innerHTML=r.model.map(cardHTML).join('');
-  row.innerHTML=r.model.map(function(){ return '<div class="kySlot"></div>'; }).join('');
+  row.innerHTML=r.model.map(function(_,i){ return '<div class="kySlot" data-i="'+i+'"></div>'; }).join('');
   const items=r.model.concat(r.extra.slice(0,2));
   for(let i=items.length-1;i>0;i--){ const j=(Math.random()*(i+1))|0; const t=items[i]; items[i]=items[j]; items[j]=t; }
   pool.innerHTML=items.map(cardHTML).join('');
   Array.prototype.forEach.call(pool.children,function(el){
-    el.addEventListener('click',function(){ tap(el); }); });
+    el.addEventListener('click',function(){ if(el._noClick&&Date.now()<el._noClick) return; tap(el); });
+    if(window.kitDrag) kitDrag(el,function(target,moved){
+      if(!moved) return; el._noClick=Date.now()+500;
+      const slot=target&&target.closest?target.closest('#ky_row .kySlot'):null;
+      if(!slot) return;
+      place(el, Number(slot.dataset.i));
+    });
+  });
   K.litStars(score); K.resetHeroes(); locked=false;
 }
-function tap(el){
+function nextEmpty(){ for(let i=0;i<placed.length;i++){ if(!placed[i]) return i; } return -1; }
+function place(el,i){
   if(locked||el.classList.contains('used')) return;
-  const r=ROUNDS[roundIdx], want=r.model[fill];
-  if(el.dataset.id===want){
-    K.play('correct');
-    row.children[fill].innerHTML=cardHTML(want);
-    el.classList.add('used');
-    fill++;
-    if(fill>=r.model.length){
-      locked=true; score++; K.litStars(score);
-      K.celebrate('ky_done_'+roundIdx, PR[roundIdx%PR.length], sentenceHTML(r), function(){
+  const r=ROUNDS[roundIdx];
+  if(i<0||placed[i]||r.model[i]!==el.dataset.id){ K.shakeEl(el); return; }
+  K.play('correct');
+  row.children[i].innerHTML=cardHTML(el.dataset.id); placed[i]=true; el.classList.add('used');
+  if(placed.every(Boolean)){
+    locked=true; score++; K.litStars(score);
+    K.celebrate('ky_done_'+roundIdx, PR[roundIdx%PR.length], sentenceHTML(r), function(){
+      roundIdx++; if(roundIdx<ROUNDS.length) renderRound(); else K.endGame(ROUNDS.length,score); });
+  }
+}
+function tap(el){ place(el, nextEmpty()); }
+function start(){
+  K.stopAll(); K.runSeq++; K.stopEndFireworks(); $('end').classList.remove('on');
+  roundIdx=0; score=0; K.buildStars(ROUNDS.length);
+  renderRound();
+  K.intro({question:true, voice:'ky_intro', text:'Look at the rule. Build the same one below — some cards do not belong!'},
+          function(){});
+}
+window.KyGame={ _lastAct:null, start(){ start(); }, stop(){ K.stopAll(); locked=true; if(window.Hub) Hub.silence(); } };
+K.wireNav(window.KyGame);
+})();
+
+/* ---- Play Kit drag helper (A template) ---- */
+window.kitDrag=function(el,onDrop){
+  el.addEventListener('pointerdown',function(e){
+    if((e.pointerType==='mouse'&&e.button!==0)||el.classList.contains('used')) return;
+    var id=e.pointerId, moved=false;
+    var g=el.cloneNode(true); g.className+=' kyGhost'; var r=el.getBoundingClientRect();
+    g.style.width=r.width+'px'; g.style.height=r.height+'px'; g.style.left=e.clientX+'px'; g.style.top=e.clientY+'px';
+    document.body.appendChild(g); el.classList.add('dragging');
+    try{ el.setPointerCapture(id); }catch(x){}
+    function mv(ev){ if(ev.pointerId!==id) return; moved=true; g.style.left=ev.clientX+'px'; g.style.top=ev.clientY+'px'; ev.preventDefault(); }
+    function up(ev){ if(ev.pointerId!==id) return;
+      el.removeEventListener('pointermove',mv); el.removeEventListener('pointerup',up); el.removeEventListener('pointercancel',up);
+      try{ el.releasePointerCapture(id); }catch(x){}
+      g.remove(); el.classList.remove('dragging');
+      var target=(ev.type==='pointerup')?document.elementFromPoint(ev.clientX,ev.clientY):null;
+      onDrop(target, moved); }
+    el.addEventListener('pointermove',mv); el.addEventListener('pointerup',up); el.addEventListener('pointercancel',up);
+    e.preventDefault();
+  });
+};
+
+/* ---- PLAY KIT 3: PATTERN BLOCKS (C-7 shape world) - rule strips, the GROWING STAIRCASE,
+   and fill-and-count read as REPEATED ADDITION (the book's own W4 strands, p24 + p27-28).
+   Canonical block colours: orange square, green triangle, blue rhombus. Geometry TRUE. ---- */
+(function(){
+const K=makeCKit('pb'), $=K.$;
+const U=46, H=U*Math.sqrt(3)/2;
+const SQ=[[0,0],[U,0],[U,-U],[0,-U]];
+const TRI=[[0,0],[U,0],[U/2,-H]];
+const RHOM=[[0,0],[U,0],[1.5*U,-H],[0.5*U,-H]];
+const FILL={sq:'#f58220', tri:'#3caa50', rhom:'#2b6fd6'};
+const PIECE={sq:SQ, tri:TRI, rhom:RHOM};
+function poly(pts,dx,dy){ return pts.map(function(p){ return [p[0]+dx,p[1]+dy]; }); }
+function strip(kinds){ const out=[]; kinds.forEach(function(k,i){
+  out.push({kind:k, pts:poly(PIECE[k], i*(1.7*U), 0)}); }); return out; }
+function staircaseFixed(){ const out=[];
+  for(let step=1;step<=3;step++){ for(let l=0;l<step;l++){
+    out.push({kind:'sq', pts:poly(SQ,(step-1)*1.15*U,-l*U)}); } }
+  return out; }
+function staircaseSlots(){ const out=[];
+  for(let l=0;l<4;l++){ out.push({kind:'sq', pts:poly(SQ,3*1.15*U,-l*U)}); }
+  return out; }
+function towers(){ const out=[];
+  for(let t=0;t<3;t++){ for(let l=0;l<2;l++){
+    out.push({kind:'sq', pts:poly(SQ,t*1.6*U,-l*U)}); } }
+  return out; }
+const ROUNDS=[
+  {id:'ab',  pre:'Build the AB rule!', slots:strip(['sq','tri','sq','tri','sq','tri']), fixed:[],
+   key:'Square, triangle — an <b>AB</b> rule with blocks!', say:'an A B rule with blocks'},
+  {id:'abc', pre:'Build the ABC rule!', slots:strip(['sq','tri','rhom','sq','tri','rhom']), fixed:[],
+   key:'Square, triangle, rhombus — an <b>ABC</b> rule!', say:'an A B C rule with blocks'},
+  {id:'stair', pre:'The staircase GROWS! Build step 4!', slots:staircaseSlots(), fixed:staircaseFixed(),
+   key:'<b>1 + 2 + 3 + 4 = 10</b> squares!', say:'One plus two plus three plus four equals ten squares'},
+  {id:'count', pre:'Fill the three towers, then count!', slots:towers(), fixed:[],
+   key:'<b>2 + 2 + 2 = 6</b> squares!', say:'Two plus two plus two equals six squares'}];
+const PR=['Great job!','Excellent!','Amazing!','Wonderful!'];
+K.reg('pb_intro','assets/voice/pb_intro.mp3','Look at the outline. Drag the blocks to build it!');
+ROUNDS.forEach(function(r,i){ K.reg('pb_done_'+i,'assets/voice/pb_done_'+i+'.mp3', r.say+'!'); });
+let roundIdx=0, score=0, locked=true, filled=[];
+const stage=$('stage'), pool=$('pool'), tracker=$('tracker'), check=$('check');
+function ptsStr(pts){ return pts.map(function(p){ return p[0].toFixed(1)+','+p[1].toFixed(1); }).join(' '); }
+function bboxOf(list){ let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;
+  list.forEach(function(sl){ sl.pts.forEach(function(p){ x0=Math.min(x0,p[0]); x1=Math.max(x1,p[0]); y0=Math.min(y0,p[1]); y1=Math.max(y1,p[1]); }); });
+  return {x0:x0,y0:y0,x1:x1,y1:y1}; }
+function allOf(r){ return r.fixed.concat(r.slots); }
+function shapeSVG(r, solid, cls){
+  const list=allOf(r), b=bboxOf(list), pad=8, w=b.x1-b.x0+2*pad, h=b.y1-b.y0+2*pad;
+  return '<svg viewBox="'+(b.x0-pad)+' '+(b.y0-pad)+' '+w+' '+h+'" class="'+(cls||'')+'">'+
+    list.map(function(sl){ return '<polygon points="'+ptsStr(sl.pts)+'" fill="'+FILL[sl.kind]+'" stroke="#222" stroke-width="3"/>'; }).join('')+'</svg>';
+}
+function pieceHTML(kind){ const pts=PIECE[kind], b=bboxOf([{kind:kind,pts:pts}]), pad=6;
+  return '<div class="kyCard pbPiece" data-kind="'+kind+'">'+
+    '<svg viewBox="'+(b.x0-pad)+' '+(b.y0-pad)+' '+(b.x1-b.x0+2*pad)+' '+(b.y1-b.y0+2*pad)+'"><polygon points="'+ptsStr(pts)+'" fill="'+FILL[kind]+'" stroke="#222" stroke-width="3"/></svg></div>'; }
+function renderTracker(){
+  tracker.innerHTML=ROUNDS.map(function(r,i){ return '<div class="pbTk'+(i===roundIdx?' cur':(i<roundIdx?' done':''))+'">'+shapeSVG(r,true)+'</div>'; }).join(''); }
+function renderRound(){
+  const r=ROUNDS[roundIdx]; locked=true; filled=r.slots.map(function(){ return false; });
+  $('pre').innerHTML=r.pre;
+  document.getElementById('pb_key').innerHTML=r.key;
+  renderTracker(); check.innerHTML=shapeSVG(r,true);
+  const list=allOf(r), b=bboxOf(list), pad=10;
+  stage.setAttribute('viewBox',(b.x0-pad)+' '+(b.y0-pad)+' '+(b.x1-b.x0+2*pad)+' '+(b.y1-b.y0+2*pad));
+  stage.innerHTML=r.fixed.map(function(sl){ return '<polygon class="pbFixed" points="'+ptsStr(sl.pts)+'" fill="'+FILL[sl.kind]+'" stroke="#222" stroke-width="3"/>'; }).join('')
+    +r.slots.map(function(sl,i){ return '<polygon class="pbSlot" data-kind="'+sl.kind+'" data-i="'+i+'" points="'+ptsStr(sl.pts)+'"/>'; }).join('');
+  const need=r.slots.map(function(sl){ return sl.kind; });
+  const others=['sq','tri','rhom'].filter(function(k){ return need.indexOf(k)<0; });
+  const items=need.concat(others.length?[others[0],others.length>1?others[1]:others[0]]:['tri','rhom']);
+  for(let i=items.length-1;i>0;i--){ const j=(Math.random()*(i+1))|0; const t=items[i]; items[i]=items[j]; items[j]=t; }
+  document.getElementById('pb_app').classList.toggle('pbBig', items.length>8);   // 9-piece pools wrap to two rows (hero corridor)
+  pool.innerHTML=items.map(pieceHTML).join('');
+  Array.prototype.forEach.call(pool.children,function(el){
+    el.addEventListener('click',function(){ if(el._noClick&&Date.now()<el._noClick) return; tap(el); });
+    if(window.kitDrag) kitDrag(el,function(target,moved){
+      if(!moved) return; el._noClick=Date.now()+500;
+      const slot=target&&target.closest?target.closest('#pb_stage .pbSlot'):null;
+      if(!slot) return;
+      place(el, Number(slot.dataset.i));
+    });
+  });
+  K.litStars(score); K.resetHeroes(); locked=false;
+}
+function place(el,i){
+  if(locked||el.classList.contains('used')) return;
+  const r=ROUNDS[roundIdx], kind=el.dataset.kind;
+  if(i<0||filled[i]||r.slots[i].kind!==kind){ K.shakeEl(el); return; }
+  const polyEl=stage.querySelectorAll('.pbSlot')[i];
+  polyEl.classList.add('filled'); polyEl.style.fill=FILL[kind];
+  filled[i]=true; el.classList.add('used'); K.play('pop');
+  if(filled.every(Boolean)){
+    locked=true; K.play('correct'); score++; K.litStars(score);
+    K.celebrate('pb_done_'+roundIdx, PR[roundIdx%PR.length],
+      shapeSVG(r,true,'pbSayShape')+' '+r.key, function(){
         roundIdx++; if(roundIdx<ROUNDS.length) renderRound(); else K.endGame(ROUNDS.length,score); });
-    }
-  } else { K.shakeEl(el); }
+  }
+}
+function tap(el){
+  const r=ROUNDS[roundIdx];
+  for(let i=0;i<r.slots.length;i++){ if(!filled[i]&&r.slots[i].kind===el.dataset.kind){ place(el,i); return; } }
+  K.shakeEl(el);
 }
 function start(){
   K.stopAll(); K.runSeq++; K.stopEndFireworks(); $('end').classList.remove('on');
   roundIdx=0; score=0; K.buildStars(ROUNDS.length);
   renderRound();
-  K.intro({voice:'ky_intro', text:'Look at the rule on the table. Build the same one below — some cards do not belong!'},
-          function(){});
+  K.intro({question:true, voice:'pb_intro', text:'Look at the outline. Drag the blocks to build it!'}, function(){});
 }
-window.KyGame={ _lastAct:null, start(){ start(); }, stop(){ K.stopAll(); locked=true; if(window.Hub) Hub.silence(); } };
-K.wireNav(window.KyGame);
+window.PbGame={ _lastAct:null, start(){ start(); }, stop(){ K.stopAll(); locked=true; if(window.Hub) Hub.silence(); } };
+K.wireNav(window.PbGame);
 })();
 
 /* ---- W4 card activity: MY OWN RULE (invent a repeating rule; the row itself answers) ---- */
@@ -2977,10 +3419,10 @@ const SVG={
   tri:'<polygon points="50,12 90,86 10,86" fill="#f0a040"/>',
   star:'<polygon points="50,8 61,38 93,38 67,58 76,90 50,71 24,90 33,58 7,38 39,38" fill="#3cba7a"/>'};
 function shp(id){ return '<svg viewBox="0 0 100 100" style="width:9.4cqh;height:10.4cqh;">'+SVG[id]+'</svg>'; }
-const ROUNDS=2, SLOTS=5;
+const ROUNDS=2, SLOTS=6;   // 6 places so the rule shows FULL repeats (William 9/15)
 const PR=['Great job!','Excellent!'];
 K.reg('km_intro','assets/voice/km_intro.mp3',
-  'Invent your own rule! Pick any shape cards and fill all five places. Your rule must repeat!');
+  'Invent your own rule! Pick any shape cards and fill all six places. Your rule must repeat all the way!');
 K.reg('km_good','assets/voice/km_good.mp3','It repeats! You made your own rule!');
 K.reg('km_no','assets/voice/km_no.mp3','Hmm, does it repeat? Try again!');
 let roundIdx=0, fill=0, score=0, locked=true, seq=[];
@@ -2988,6 +3430,7 @@ const row=$('row'), pool=$('pool');
 function cardHTML(id){ return '<div class="kyCard" data-id="'+id+'">'+shp(id)+'</div>'; }
 function ruleName(sq){
   for(let p=2;p<=4;p++){
+    if(sq.length%p!==0 || sq.length/p<2) continue;   // FULL repeats only: the row = >=2 whole periods
     let ok=true, distinct={};
     for(let i=0;i<sq.length;i++){ if(sq[i]!==sq[i%p]){ ok=false; break; } }
     for(let i=0;i<Math.min(p,sq.length);i++) distinct[sq[i]]=1;
@@ -3033,7 +3476,7 @@ function start(){
   K.stopAll(); K.runSeq++; K.stopEndFireworks(); $('end').classList.remove('on');
   roundIdx=0; score=0; K.buildStars(ROUNDS);
   renderRound();
-  K.intro({voice:'km_intro', text:'Invent your own rule! Fill all five places so it repeats.'}, function(){});
+  K.intro({question:true, voice:'km_intro', text:'Invent your own rule! Fill all six places so it repeats all the way.'}, function(){});
 }
 window.KmGame={ _lastAct:null, start(){ start(); }, stop(){ K.stopAll(); locked=true; if(window.Hub) Hub.silence(); } };
 K.wireNav(window.KmGame);
@@ -3162,6 +3605,14 @@ window.Hub = {
       ]
     }
   },
+  kitMenu:{
+    title:'Play Kit',
+    options:[
+      {launch:'ky', label:'Pattern Cards',  orange:true},
+      {launch:'km', label:'My Own Rule',    orange:true},
+      {launch:'pb', label:'Pattern Blocks', orange:true}
+    ]
+  },
   actMenusW4:{
     act1:{
       title:'Math Activities 1',
@@ -3181,9 +3632,7 @@ window.Hub = {
       title:'Thinking Math',
       options:[
         {launch:'cp', act:'aStart', label:'Activity 1', orange:true},   // p.22 Start the patterns - new reverse direction
-        {launch:'tm2', label:'Activity 2', orange:true},                // application: build four equal groups, then add
-        {launch:'ky', label:'Pattern Cards', orange:true},                 // W4 Card Activities (approved 09-14)
-        {launch:'km', label:'My Own Rule', orange:true}
+        {launch:'tm2', label:'Activity 2', orange:true}                 // ky/km moved to the Play Kit card (W4)
       ]
     }
   },
@@ -3218,8 +3667,89 @@ window.Hub = {
     if(startBtn) startBtn.hidden=true;
     player.play().catch(()=>{});
   },
+  // CHAPTER PLAY BAR (William 9/15: "the play bar on the math lit vid so that people can
+  // jump between the parts"). Boundaries are MEASURED edit points of each week's
+  // literature mp4 (scene cuts + silences + transcript + frame checks), never guessed.
+  litChapters:{
+    1:[{t:0,l:'Story',ic:'\uD83C\uDFAC'},{t:45.0,l:'2D Story',ic:'\uD83D\uDD8D'},{t:69.2,l:'Song',ic:'\uD83C\uDFB5'},{t:158.4,l:'Pictures',ic:'\uD83D\uDCAC'},{t:166.8,l:'Reading',ic:'\uD83D\uDCD6'},{t:198.1,l:'You read!',ic:'\u2B50'}],
+    2:[{t:0,l:'Story',ic:'\uD83C\uDFAC'},{t:72.9,l:'2D Story',ic:'\uD83D\uDD8D'},{t:138.2,l:'Song',ic:'\uD83C\uDFB5'},{t:235.6,l:'Pictures',ic:'\uD83D\uDCAC'},{t:247.5,l:'Reading',ic:'\uD83D\uDCD6'},{t:309.7,l:'You read!',ic:'\u2B50'}],
+    3:[{t:0,l:'Story',ic:'\uD83C\uDFAC'},{t:60.5,l:'2D Story',ic:'\uD83D\uDD8D'},{t:148.0,l:'Song',ic:'\uD83C\uDFB5'},{t:227.0,l:'Pictures',ic:'\uD83D\uDCAC'},{t:235.6,l:'Reading',ic:'\uD83D\uDCD6'},{t:301.4,l:'You read!',ic:'\u2B50'}],
+    4:[{t:0,l:'Story',ic:'\uD83C\uDFAC'},{t:27.8,l:'2D Story',ic:'\uD83D\uDD8D'},{t:49.6,l:'Song',ic:'\uD83C\uDFB5'},{t:123.6,l:'Pictures',ic:'\uD83D\uDCAC'},{t:136.1,l:'Reading',ic:'\uD83D\uDCD6'},{t:178.5,l:'You read!',ic:'\u2B50'}],
+  },
+  buildLitChapters(act){
+    const bar=document.getElementById('v_chapters');
+    const player=document.getElementById('v_player');
+    if(!bar||!player) return;
+    const chs = act==='poem' ? this.litChapters[this.week] : null;
+    if(this._chT){ clearInterval(this._chT); this._chT=null; }
+    bar.hidden=!chs||!chs.length;
+    bar.innerHTML='';
+    if(bar.hidden) return;
+    // PART-BOUNDED PLAYBACK (William 9/15): a tapped chapter plays ONLY itself and pauses
+    // at its measured end (snap-back keeps the stop exact); tapping it again replays it.
+    // "Play All" is the whole-film watch-through. mode = 'all' | chapter index.
+    let mode='all';
+    const endOf=function(j){ return j+1<chs.length?chs[j+1].t:(player.duration||1e9); };
+    const startPlay=function(){
+      const sb=document.getElementById('v_startBtn');
+      if(sb&&!sb.hidden) sb.click(); else player.play().catch(function(){});
+    };
+    bar.innerHTML='<button type="button" class="vChapAll" aria-label="Play the whole video">'
+      +'<span class="vChapIc">\u25B6</span><span class="vChapLb">Play All</span></button>'
+      +chs.map(function(c,i){
+      return '<button type="button" class="vChap" data-i="'+i+'" data-t="'+c.t+'" aria-label="'+c.l+'">'
+        +'<span class="vChapFill"></span><span class="vChapIc">'+c.ic+'</span>'
+        +'<span class="vChapLb">'+c.l+'</span></button>'; }).join('');
+    const chapBtns=Array.prototype.slice.call(bar.querySelectorAll('.vChap'));
+    const clearEnded=function(){ chapBtns.forEach(function(b){ b.classList.remove('ended'); }); };
+    bar.querySelector('.vChapAll').addEventListener('click',function(){
+      mode='all'; clearEnded();
+      try{ player.currentTime=0.05; }catch(e){}
+      startPlay();
+    });
+    chapBtns.forEach(function(b){
+      b.addEventListener('click',function(){
+        const i=+b.dataset.i;
+        mode=i; clearEnded();
+        try{ player.currentTime=chs[i].t+0.05; }catch(e){}
+        startPlay();
+      });
+    });
+    const boundCheck=function(){
+      if(mode==='all'||player.paused) return;
+      const e=endOf(mode);
+      if((player.currentTime||0)>=e-0.08){
+        player.pause();
+        try{ player.currentTime=Math.max(chs[mode].t, e-0.06); }catch(_){ }
+        const b=chapBtns[mode]; if(b) b.classList.add('ended');
+        const shell=document.querySelector('.vidShell');
+        if(shell){ shell.classList.remove('is-playing'); shell.classList.add('is-ready'); }
+        const sb=document.getElementById('v_startBtn'); if(sb) sb.hidden=true;
+      }
+    };
+    player.addEventListener('timeupdate', boundCheck);
+    // resuming via the little play toggle FROM a part-end pause means "keep watching":
+    // switch to Play All so the film continues instead of instantly re-pausing.
+    player.addEventListener('play', function(){
+      if(mode!=='all'){ const e=endOf(mode);
+        if(Math.abs((player.currentTime||0)-(e-0.06))<0.25){ mode='all'; clearEnded(); } }
+    });
+    const upd=function(){
+      boundCheck();
+      const t=player.currentTime||0;
+      let i=chs.length-1; while(i>0&&t<chs[i].t) i--;
+      chapBtns.forEach(function(b,j){
+        b.classList.toggle('on', j===i);
+        const f=b.querySelector('.vChapFill');
+        const t0=chs[j].t, t1=j+1<chs.length?chs[j+1].t:(player.duration||t0+1);
+        f.style.width=(j<i?100:(j>i?0:Math.max(0,Math.min(100,100*(t-t0)/(t1-t0)))))+'%';
+      });
+    };
+    this._chT=setInterval(upd,100); upd();
+  },
   playVideo(act){
     const meta=this.videos[act]||{title:'Video', src:''};
+    this.buildLitChapters(act);
     const shell=document.querySelector('.vidShell');
     const title=document.getElementById('v_title');
     const player=document.getElementById('v_player');
@@ -3294,14 +3824,17 @@ window.Hub = {
   showActPick(menuKey){
     const menus=this.menusFor(this.week)||this.actMenus||{};
     this.actMenuKey=menuKey||this.actMenuKey||'act1';
-    const menu=menus[this.actMenuKey]||menus.act1;
+    // 'kit' = the Play Kit hub card's own menu
+    const menu=menus[this.actMenuKey]||(this.actMenuKey==='kit'?this.kitMenu:null)||menus.act1;
     const title=document.getElementById('ap_title');
     const btn1=document.getElementById('ap_btn1');
     const btn2=document.getElementById('ap_btn2');
+    const btn3=document.getElementById('ap_btn3');
     if(title) title.textContent=menu.title;
-    [btn1,btn2].forEach((btn,i)=>{
+    [btn1,btn2,btn3].forEach((btn,i)=>{
       if(!btn) return;
       const opt=menu.options[i];
+      btn.hidden=!opt;
       if(!opt) return;
       btn.dataset.launch=opt.launch;
       btn.dataset.act=opt.act||'';
@@ -3417,7 +3950,7 @@ window.Hub = {
     this.silence();
     this.stopVideo();
     this.stopConceptVideo();
-    ['cp','ra','tm1','tm2','ky','km','video','concept','actPick'].forEach(k=>{
+    ['cp','ra','tm1','tm2','ky','km','pb','video','concept','actPick'].forEach(k=>{
       const el=document.getElementById('screen-'+k);
       if(el) el.classList.remove('on');
     });
@@ -3427,6 +3960,7 @@ window.Hub = {
     if(window.SameNumGame) SameNumGame.stop();
     if(window.KyGame) KyGame.stop();
     if(window.KmGame) KmGame.stop();
+    if(window.PbGame) PbGame.stop();
     this.silence();
     document.getElementById('hub').classList.add('hide');
     document.getElementById('weeks').classList.remove('hide');
@@ -3446,6 +3980,7 @@ window.Hub = {
     this.week=week;
     applyWeekShapes(week);          // rules/tray must be right BEFORE any game renders
     this.applyWeekArt(week);
+    if(window.hubCarousel) hubCarousel.setWeek(week);      // Play Kit card is W4-only
     this.setHubReady(week);
     document.getElementById('weeks').classList.add('hide');
     document.getElementById('hub').classList.remove('hide');
@@ -3455,7 +3990,7 @@ window.Hub = {
     this.silence();
     this.stopVideo();
     this.stopConceptVideo();
-    ['cp','ra','tm1','tm2','ky','km','video','concept','actPick'].forEach(k=>{
+    ['cp','ra','tm1','tm2','ky','km','pb','video','concept','actPick'].forEach(k=>{
       const el=document.getElementById('screen-'+k);
       if(el) el.classList.remove('on');
     });
@@ -3465,6 +4000,7 @@ window.Hub = {
     if(window.SameNumGame) SameNumGame.stop();
     if(window.KyGame) KyGame.stop();
     if(window.KmGame) KmGame.stop();
+    if(window.PbGame) PbGame.stop();
     this.silence();
     document.getElementById('weeks').classList.add('hide');
     document.getElementById('hub').classList.remove('hide');
@@ -3481,10 +4017,11 @@ window.Hub = {
     if(window.SameNumGame) SameNumGame.stop();
     if(window.KyGame) KyGame.stop();
     if(window.KmGame) KmGame.stop();
+    if(window.PbGame) PbGame.stop();
     this.silence();
     document.getElementById('weeks').classList.add('hide');
     document.getElementById('hub').classList.add('hide');
-    ['cp','ra','tm1','tm2','ky','km','video','concept','actPick'].forEach(k=>{
+    ['cp','ra','tm1','tm2','ky','km','pb','video','concept','actPick'].forEach(k=>{
       const el=document.getElementById('screen-'+k);
       if(el) el.classList.toggle('on', k===kind);
     });
@@ -3498,6 +4035,7 @@ window.Hub = {
       else if(kind==='tm2') SameNumGame.start();
       else if(kind==='ky') KyGame.start();
       else if(kind==='km') KmGame.start();
+      else if(kind==='pb') PbGame.start();
       else if(kind==='video') this.playVideo(act);
       else if(kind==='concept') this.showConceptPick();
       else if(kind==='actPick') this.showActPick(act||this.actMenuKey||'act1');
@@ -3619,6 +4157,12 @@ document.querySelectorAll('#ap_stage .actPickBtn').forEach(btn=>{
     dotsWrap.appendChild(b);
   });
   const dots=[...dotsWrap.querySelectorAll('button')];
+  let limit=cards.length;
+  window.hubCarousel={ setWeek(week){
+    let n=0;
+    cards.forEach((card,idx)=>{ const w=card.dataset.week; const show=!w||Number(w)===Number(week); card.hidden=!show; dots[idx].hidden=!show; if(show) n=idx+1; });
+    limit=n; if(i>=limit) i=limit-1; render();
+  } };
   function render(){
     cards.forEach((card,idx)=>{
       card.classList.remove('is-center','is-left','is-right','is-far');
@@ -3630,10 +4174,10 @@ document.querySelectorAll('#ap_stage .actPickBtn').forEach(btn=>{
     });
     dots.forEach((d,idx)=>d.classList.toggle('on', idx===i));
     prevBtn.disabled=i<=0;
-    nextBtn.disabled=i>=cards.length-1;
+    nextBtn.disabled=i>=limit-1;
   }
   prevBtn.addEventListener('click',()=>{ if(i>0){ i--; render(); } });
-  nextBtn.addEventListener('click',()=>{ if(i<cards.length-1){ i++; render(); } });
+  nextBtn.addEventListener('click',()=>{ if(i<limit-1){ i++; render(); } });
   const stage=document.querySelector('.hubStage');
   let drag=null;
   let suppressClickUntil=0;
